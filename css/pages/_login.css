@@ -1,0 +1,236 @@
+/* pages/_login.css - Estilos específicos da página de login */
+
+.auth-section {
+    padding: 4rem 0;
+    min-height: calc(100vh - 70px);
+    display: flex;
+    align-items: center;
+    background-color: #f8f9fa;
+}
+
+.auth-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-top: 5rem;
+}
+
+.auth-form {
+    padding: 3rem;
+}
+
+.auth-form h1 {
+    color: var(--dark-color);
+    margin-bottom: 0.5rem;
+    font-size: 2.2rem;
+}
+
+.auth-form p {
+    color: #666;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+/* ESTILOS DOS INPUTS (MANTENDO AS PROPORÇÕES ORIGINAIS) */
+#loginForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--dark-color);
+    font-size: 0.95rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    height: auto;
+}
+
+.form-group input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(58, 123, 213, 0.1);
+}
+
+/* Opções do formulário */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.remember-me input {
+    margin-right: 0.5rem;
+}
+
+.forgot-password {
+    font-size: 0.9rem;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+/* Botão de login */
+.btn-primary {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 4px;
+    margin-top: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+/* Divisor */
+.auth-divider {
+    display: flex;
+    align-items: center;
+    margin: 1.5rem 0;
+    color: #999;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #eee;
+}
+
+.auth-divider span {
+    padding: 0 1rem;
+}
+
+/* Login Social */
+.social-login {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.btn-social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    width: 100%;
+    font-size: 0.95rem;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-discord {
+    background-color: #5865F2;
+    color: white;
+}
+
+.btn-discord:hover {
+    background-color: #4752c4;
+}
+
+.btn-google {
+    background-color: #f8f9fa;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.btn-google:hover {
+    background-color: #e9ecef;
+}
+
+/* Lado direito - Conteúdo */
+.auth-hero {
+    padding: 3rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.auth-hero h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* Botão de Contorno */
+.btn-outline {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    border: 2px solid white;
+    color: white;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.btn-outline:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+    .auth-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .auth-hero {
+        display: none;
+    }
+    
+    .auth-form {
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .form-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .forgot-password {
+        margin-top: 0.5rem;
+    }
+}

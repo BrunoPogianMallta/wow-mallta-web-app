@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro | Mallta WoW</title>
+    <meta name="description" content="Crie sua conta no Eternal WoW e comece sua jornada em Azeroth">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/pages/_register.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header/Navbar -->
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html">
+                    <img src="../images/logomallta.png" alt="Mallta WoW Logo">
+                    <span>Mallta WoW</span>
+                </a>
+            </div>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <!-- <li><a href="shop.html">Loja</a></li> -->
+                    <li><a href="armory.html">Armory</a></li>
+                    <li><a href="forum.html">Fórum</a></li>
+                    <li><a href="login.html" class="btn-login">Login</a></li>
+                </ul>
+            </nav>
+            
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Registration Section -->
+    <main class="registration-section">
+        <div class="container">
+            <div class="registration-container">
+                <div class="registration-form">
+                    <h1>Crie sua conta</h1>
+                    <p>Junte-se à nossa comunidade e comece sua aventura em Azeroth</p>
+                    
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <label for="username">Nome de usuário*</label>
+                            <input type="text" id="username" name="username" required minlength="3" maxlength="16">
+                            <div class="error-message"></div>
+                            <div class="requirements">
+                                Deve ter entre 3-16 caracteres (apenas letras e números)
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email*</label>
+                            <input type="email" id="email" name="email" required>
+                            <div class="error-message"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password">Senha*</label>
+                            <div class="password-field">
+                              <input type="password" id="password" name="password" required minlength="6">
+                              <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                            </div>
+                            <div id="passwordStrength" class="password-strength hidden"></div>
+                            <div class="error-message"></div>
+                            <div class="requirements password-requirements">
+                              Mínimo 6 caracteres
+                            </div>
+                          </div>
+                        
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirmar senha*</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" required>
+                            <div class="error-message"></div>
+                        </div>
+
+                        
+                        <!-- <div class="form-group">
+                            <label for="referral">Código de indicação (opcional)</label>
+                            <input type="text" id="referral" name="referral">
+                        </div> -->
+                        
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            <label for="terms">Eu concordo com os <a href="#">Termos de Serviço</a> e <a href="#">Política de Privacidade</a>*</label>
+                        </div>
+                        
+                        
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block">Criar conta</button>
+                        </div>
+                        
+                        <div class="form-footer">
+                            <p>Já tem uma conta? <a href="login.html">Faça login</a></p>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="registration-benefits">
+                    <h2>Benefícios de se registrar</h2>
+                    <ul class="benefits-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>Personagem nível 80 instantâneo (opcional)</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>1000 pontos de loja de boas-vindas</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>Montaria épica exclusiva</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>Acesso completo ao servidor</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>Suporte prioritário</span>
+                        </li>
+                    </ul>
+                    
+                    <div class="server-info-box">
+                        <h3>Informações do servidor</h3>
+                        <div class="info-item">
+                            <i class="fas fa-server"></i>
+                            <span>Status: <strong>Online</strong></span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-users"></i>
+                            <span>Jogadores online: <strong id="registerOnlineCount">1,247</strong></span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-bolt"></i>
+                            <span>Versão: <strong>WotLK 3.3.5a</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="../images/logomallta.png" alt="Mallta WoW Logo">
+                        <span>Mallta WoW</span>
+                    </div>
+                    <p>O melhor servidor privado de World of Warcraft. Jogue conosco e reviva a magia de Azeroth.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="shop.html">Loja</a></li>
+                        <li><a href="armory.html">Armory</a></li>
+                        <li><a href="forum.html">Fórum</a></li>
+                        <li><a href="register.html">Registro</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Suporte</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Regras</a></li>
+                        <li><a href="#">Reportar Bug</a></li>
+                        <li><a href="#">Contato</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-legal">
+                    <h4>Legal</h4>
+                    <p>Este servidor não é afiliado à Blizzard Entertainment. World of Warcraft e Blizzard Entertainment são marcas registradas da Blizzard Entertainment, Inc.</p>
+                    <p>&copy; 2025 Mallta WoW. Todos os direitos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module" src="../js/config.js"></script>
+    <script src="../js/auth.js"></script>
+    <script  type="module" src="../js/main.js"></script>
+</body>
+</html>

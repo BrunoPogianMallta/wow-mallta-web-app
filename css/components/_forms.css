@@ -1,0 +1,135 @@
+/* components/_forms.css - Estilos base para formulários */
+
+/* ======================
+   ESTRUTURA BÁSICA
+   ====================== */
+   .form-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--dark-color);
+    font-size: 0.95rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(58, 123, 213, 0.2);
+    outline: none;
+}
+
+/* Texto de ajuda/requisitos */
+.form-help {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 0.5rem;
+    line-height: 1.4;
+}
+
+/* Checkboxes e Radios */
+.checkbox-group, .radio-group {
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
+}
+
+.checkbox-group input, .radio-group input {
+    width: auto;
+    margin-right: 0.75rem;
+}
+
+.checkbox-group label, .radio-group label {
+    margin-bottom: 0;
+    font-weight: normal;
+}
+
+/* Mensagens de erro */
+.error-message {
+    color: var(--danger-color);
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+    height: 1rem;
+}
+
+/* Validação */
+.form-group.error input {
+    border-color: var(--danger-color);
+}
+
+.form-group.success input {
+    border-color: var(--success-color);
+}
+
+/* ======================
+   ELEMENTOS ESPECÍFICOS
+   ====================== */
+/* Container de opções */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+}
+
+/* Link "esqueci a senha" */
+.forgot-password {
+    color: var(--primary-color);
+    font-size: 0.9rem;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+/* Divisor */
+.form-divider {
+    position: relative;
+    margin: 1.5rem 0;
+    text-align: center;
+    color: #999;
+}
+
+.form-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: #eee;
+    z-index: 1;
+}
+
+.form-divider span {
+    position: relative;
+    padding: 0 1rem;
+    background-color: white;
+    z-index: 2;
+}
+
+/* Rodapé do formulário */
+.form-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.form-footer a {
+    font-weight: 600;
+    color: var(--primary-color);
+}

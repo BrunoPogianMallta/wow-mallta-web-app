@@ -1,0 +1,54 @@
+/* _base.css - Estilos base e globais */
+
+:root {
+    --primary-color: #3a7bd5;
+    --secondary-color: #00d2ff;
+    --dark-color: #1a1a2e;
+    --light-color: #f8f9fa;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    color: #333;
+    line-height: 1.6;
+    background-color: #f5f5f5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Marcellus SC', serif;
+    font-weight: normal;
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: var(--secondary-color);
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Responsividade base */
+@media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mallta WoW | Servidor Privado</title>
+    <meta name="description" content="Jogue World of Warcraft em nosso servidor privado com custom content e comunidade ativa">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header/Navbar -->
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/logomallta.png" alt="Eternal WoW Logo">
+                    <span>Mallta WoW</span>
+                </a>
+            </div>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li class="active"><a href="index.html">Home</a></li>
+                    <!-- <li><a href="pages/shop.html">Loja</a></li> -->
+                    <li><a href="pages/armory.html">Armory</a></li>
+                    <li><a href="pages/forum.html">Fórum</a></li>
+                    <li><a href="pages/login.html" class="btn-login">Login</a></li>
+                </ul>
+            </nav>
+            
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero">
+        <!-- Vídeo de fundo -->
+        <div class="hero-video">
+            <video autoplay muted loop playsinline>
+                <source src="videos/homebg.mp4" type="video/mp4">
+                <!-- Fallback para imagem caso o vídeo não carregue -->
+                <img src="images/hero-fallback.jpg" alt="Background do Mallta WoW">
+            </video>
+            <div class="video-overlay"></div>
+        </div>
+        
+        <div class="container">
+            <div class="hero-content">
+                <h1>Bem-vindo ao Mallta WoW</h1>
+                <p>Experimente World of Warcraft como nunca antes. Custom content, rates balanceados e comunidade ativa.</p>
+                <div class="hero-buttons">
+                    <a href="pages/register.html" class="btn btn-primary">Jogue Grátis</a>
+                    <a href="#features" class="btn btn-secondary">Saiba Mais</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Server Status -->
+    <section class="server-status">
+        <div class="container">
+            <div class="status-box">
+                <h3>Status do Servidor</h3>
+                <div class="status-indicator online">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Online</span>
+                </div>
+                <div class="players-online">
+                    <i class="fas fa-users"></i>
+                    <span>Jogadores Online: <span id="online-count">1,247</span></span>
+                </div>
+                <div class="server-info">
+                    <p>Versão: Wrath of the Lich King 3.3.5a</p>
+                    <p>XP: 5x | Profissões: 3x | Ouro: 2x</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Por que jogar no Mallta WoW?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h3>Custom Content</h3>
+                    <p>Raids e dungeons exclusivas além do conteúdo original do jogo.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3>Balanceamento</h3>
+                    <p>Classes balanceadas para PvP e PvE competitivos.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Anti-Cheat</h3>
+                    <p>Sistema avançado de detecção e prevenção de trapaças.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Suporte Ativo</h3>
+                    <p>Equipe de GMs disponível para ajudar a comunidade.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="news">
+        <div class="container">
+            <h2>Últimas Notícias</h2>
+            <div class="news-grid">
+                <article class="news-card">
+                    <div class="news-image">
+                        <img src="images/news1.jpg" alt="Nova Raid">
+                    </div>
+                    <div class="news-content">
+                        <span class="news-date">15/06/2023</span>
+                        <h3>Nova Raid: Trono do Eclipse</h3>
+                        <p>Conheça a nova raid exclusiva do Eternal WoW com 10 bosses desafiadores e loot épico.</p>
+                        <a href="#" class="read-more">Leia mais</a>
+                    </div>
+                </article>
+                
+                <article class="news-card">
+                    <div class="news-image">
+                        <img src="images/news2.jpg" alt="Evento de Verão">
+                    </div>
+                    <div class="news-content">
+                        <span class="news-date">01/06/2023</span>
+                        <h3>Evento de Verão 2023</h3>
+                        <p>Participe do nosso evento sazonal com missões especiais e recompensas exclusivas.</p>
+                        <a href="#" class="read-more">Leia mais</a>
+                    </div>
+                </article>
+                
+                <article class="news-card">
+                    <div class="news-image">
+                        <img src="images/news3.jpg" alt="Torneio PvP">
+                    </div>
+                    <div class="news-content">
+                        <span class="news-date">20/05/2023</span>
+                        <h3>Torneio PvP Mensal</h3>
+                        <p>Inscrições abertas para o torneio 3v3 com premiação em pontos de loja.</p>
+                        <a href="#" class="read-more">Leia mais</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Pronto para começar sua jornada?</h2>
+            <p>Cadastre-se agora e comece a jogar em minutos.</p>
+            <div class="cta-buttons">
+                <a href="pages/register.html" class="btn btn-primary">Criar Conta</a>
+                <a href="pages/download.html" class="btn btn-secondary">Download do Cliente</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="images/logomallta.png" alt="Mallta WoW Logo">
+                        <span>Mallta WoW</span>
+                    </div>
+                    <p>O melhor servidor privado de World of Warcraft. Jogue conosco e reviva a magia de Azeroth.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <!-- <a href="#"><i class="fab fa-twitter"></i></a> -->
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <!-- <li><a href="pages/shop.html">Loja</a></li> -->
+                        <li><a href="pages/armory.html">Armory</a></li>
+                        <li><a href="pages/forum.html">Fórum</a></li>
+                        <li><a href="pages/register.html">Registro</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Suporte</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Regras</a></li>
+                        <li><a href="#">Reportar Bug</a></li>
+                        <li><a href="#">Contato</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-legal">
+                    <h4>Legal</h4>
+                    <p>Este servidor não é afiliado à Blizzard Entertainment. World of Warcraft e Blizzard Entertainment são marcas registradas da Blizzard Entertainment, Inc.</p>
+                    <p>&copy; 2025 Mallta WoW  Todos os direitos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script  type="module" src="js/main.js"></script>
+    <script type="module" src="../js/config.js"></script>
+    <script src="js/api.js"></script>
+</body>
+</html>

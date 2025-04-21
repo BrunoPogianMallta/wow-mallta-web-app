@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login |Mallta WoW</title>
+    <meta name="description" content="Acesse sua conta no Eternal WoW e continue sua aventura em Azeroth">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/pages/_login.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header/Navbar -->
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html">
+                    <img src="../images/logomallta.png" alt="Mallta WoW Logo">
+                    <span>Mallta WoW</span>
+                </a>
+            </div>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <!-- <li><a href="shop.html">Loja</a></li> -->
+                    <li><a href="armory.html">Armory</a></li>
+                    <li><a href="forum.html">Fórum</a></li>
+                    <li><a href="login.html" class="btn-login active">Login</a></li>
+                </ul>
+            </nav>
+            
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+    
+
+    <!-- Login Section -->
+    <main class="auth-section">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-form">
+                    <h1>Bem-vindo de volta</h1>
+                    <p>Acesse sua conta para continuar sua jornada</p>
+                    
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="loginUsername">Nome de usuário ou email*</label>
+                            <input type="text" id="loginUsername" name="username" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="loginPassword">Senha*</label>
+                            <input type="password" id="loginPassword" name="password" required>
+                            <div class="form-options">
+                                <label class="remember-me">
+                                    <input type="checkbox" id="remember" name="remember"> Lembrar-me
+                                </label>
+                                <a href="forgot-password.html" class="forgot-password">Esqueceu a senha?</a>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+                        </div>
+                        
+                        <!-- <div class="auth-divider">
+                            <span>ou</span>
+                        </div>
+                        
+                        <div class="social-login">
+                            <button type="button" class="btn btn-social btn-discord">
+                                <i class="fab fa-discord"></i> Continuar com Discord
+                            </button>
+                            <button type="button" class="btn btn-social btn-google">
+                                <i class="fab fa-google"></i> Continuar com Google
+                            </button>
+                        </div> -->
+                        
+                        <div class="auth-footer">
+                            <p>Não tem uma conta? <a href="register.html">Registre-se</a></p>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="auth-hero">
+                    <div class="auth-hero-content">
+                        <h2>Novo no Mallta WoW?</h2>
+                        <p>Junte-se a milhares de jogadores em nossa comunidade ativa e comece sua aventura em Azeroth hoje mesmo!</p>
+                        <a href="register.html" class="btn btn-outline">Criar conta</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="../images/logomallta.png" alt="Mallta WoW Logo">
+                        <span>Mallta WoW</span>
+                    </div>
+                    <p>O melhor servidor privado de World of Warcraft. Jogue conosco e reviva a magia de Azeroth.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="shop.html">Loja</a></li>
+                        <li><a href="armory.html">Armory</a></li>
+                        <li><a href="forum.html">Fórum</a></li>
+                        <li><a href="register.html">Registro</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Suporte</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Regras</a></li>
+                        <li><a href="#">Reportar Bug</a></li>
+                        <li><a href="#">Contato</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-legal">
+                    <h4>Legal</h4>
+                    <p>Este servidor não é afiliado à Blizzard Entertainment. World of Warcraft e Blizzard Entertainment são marcas registradas da Blizzard Entertainment, Inc.</p>
+                    <p>&copy; 2025 Mallta WoW. Todos os direitos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script  type="module" src="../js/main.js"></script>
+    <script type="module" src="../js/config.js"></script>
+    <script src="../js/auth.js"></script>
+    
+</body>
+</html>
