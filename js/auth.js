@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (data.success) {
           alert('Registro realizado! Verifique seu e-mail para ativar sua conta.');
-          window.location.href = `${window.location.origin}/wow-mallta-web-app/pages/login.html`;
+          window.location.href = `../pages/dashboard.html`;
         } else {
           if (data.errors) {
             data.errors.forEach(err => {

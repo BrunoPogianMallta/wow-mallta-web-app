@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     let characters = [];
 
     if (!isAuthenticated()) {
-        // redirectToLogin();
+        redirectToLogin();
         return;
     }
 
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function isAuthenticated() {
-        // return !!localStorage.getItem('authToken');
+        return !!localStorage.getItem('authToken');
     }
 
     function redirectToLogin() {
