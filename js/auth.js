@@ -1,20 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Configurações globais
+  // =================== CONFIGURAÇÃO =================== //
   const config = {
-    apiBaseUrl: 'https://wowmallta.servehttp.com:3000'
+    apiBaseUrl: 'https://api-backend-server.onrender.com'
   };
 
-  // Elementos comuns
+  // =================== ELEMENTOS =================== //
   const togglePasswordButtons = document.querySelectorAll('.toggle-password');
-  
-  // Funções utilitárias
+
+  // =================== FUNÇÕES UTILITÁRIAS =================== //
   const clearErrors = (form) => {
     const errorElements = form.querySelectorAll('.error-message');
     errorElements.forEach(el => el.textContent = '');
   };
 
   const showError = (field, message) => {
-    const errorElement = field.nextElementSibling;
+    const errorElement = field?.nextElementSibling;
     if (errorElement && errorElement.classList.contains('error-message')) {
       errorElement.textContent = message;
     }
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     alert('Erro de conexão com o servidor. Tente novamente.');
   };
 
-  // Toggle password visibility
+  // =================== TOGGLE DE SENHA =================== //
   togglePasswordButtons.forEach(button => {
     button.addEventListener('click', () => {
       const input = button.previousElementSibling;
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ========== REGISTRO ========== //
+  // =================== FORMULÁRIO DE REGISTRO =================== //
   const registerForm = document.getElementById('registerForm');
   if (registerForm) {
     const passwordInput = registerForm.querySelector('#password');
@@ -45,20 +45,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const calculatePasswordStrength = (password) => {
       let strength = 0;
       const regexes = [
-        /[a-z]/, // lowercase
-        /[A-Z]/, // uppercase
-        /[0-9]/, // numbers
-        /[!@#$%^&*(),.?":{}|<>]/ // special chars
+        /[a-z]/,        // minúsculas
+        /[A-Z]/,        // maiúsculas
+        /[0-9]/,        // números
+        /[!@#$%^&*(),.?":{}|<>]/ // especiais
       ];
-      
       regexes.forEach(regex => regex.test(password) && strength++);
       if (password.length >= 8) strength++;
 
-      // Update UI
+      // Atualiza a UI de força
       passwordStrength.className = 'password-strength';
       let strengthClass = '', strengthText = '';
-      
-      switch(strength) {
+
+      switch (strength) {
         case 1: strengthClass = 'normal'; strengthText = 'Normal'; break;
         case 2: strengthClass = 'common'; strengthText = 'Comum'; break;
         case 3: strengthClass = 'rare'; strengthText = 'Rara'; break;
@@ -74,8 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     passwordInput?.addEventListener('input', (e) => {
-      const password = e.target.value;
-      calculatePasswordStrength(password);
+      calculatePasswordStrength(e.target.value);
     });
 
     registerForm.addEventListener('submit', async (e) => {
@@ -90,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
         terms: registerForm.querySelector('#terms').checked
       };
 
-      // Validação básica
+      // Validação
       if (formData.password !== formData.confirmPassword) {
         showError(registerForm.querySelector('#confirmPassword'), 'As senhas não coincidem.');
         return;
@@ -102,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       try {
-        const response = await fetch(`https://wowmallta.servehttp.com:3000/api/auth/register`, {
+        const response = await fetch(`${config.apiBaseUrl}/api/auth/register`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
@@ -128,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ========== LOGIN ========== //
+  // =================== FORMULÁRIO DE LOGIN =================== //
   const loginForm = document.getElementById('loginForm');
   if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
@@ -142,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
       };
 
       try {
-        const response = await fetch(`https://wowmallta.servehttp.com:3000/api/auth/login`, {
+        const response = await fetch(`${config.apiBaseUrl}/api/auth/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
@@ -151,7 +149,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await response.json();
 
         if (data.success) {
-          // Armazena o token
           localStorage.setItem('authToken', data.token);
           if (formData.remember) {
             localStorage.setItem('rememberMe', 'true');
@@ -159,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.removeItem('rememberMe');
           }
 
-          // Redireciona para o dashboard
+          console.log('Login efetuado com sucesso!');
           window.location.href = '../pages/dashboard.html';
         } else {
           showError(loginForm.querySelector('#loginUsername'), 'Credenciais inválidas.');
@@ -170,42 +167,45 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Verifica se há credenciais salvas
     if (localStorage.getItem('rememberMe') === 'true') {
       const rememberCheckbox = loginForm.querySelector('#remember');
       if (rememberCheckbox) rememberCheckbox.checked = true;
     }
   }
 
-  // ========== VERIFICAÇÃO DE AUTENTICAÇÃO ========== //
-  const protectedPages = [];
+  // =================== VERIFICAÇÃO DE AUTENTICAÇÃO =================== //
+  const protectedPages = ['dashboard.html', 'profile.html', 'settings.html'];
   const currentPage = window.location.pathname.split('/').pop();
 
-// Verifica apenas se a página atual requer autenticação
-if (protectedPages.includes(currentPage)) {
-  const authToken = localStorage.getItem('authToken');
-  
-  if (!authToken) {
-    window.location.href = `${window.location.origin}/pages/login.html`;
-    return; // Importante: interrompe a execução
+  if (protectedPages.includes(currentPage)) {
+    const authToken = localStorage.getItem('authToken');
+
+    if (!authToken) {
+      window.location.href = `${window.location.origin}/pages/login.html`;
+      return;
+    }
+
+    verifyToken(authToken).catch(() => {
+      localStorage.removeItem('authToken');
+      window.location.href = `${window.location.origin}/pages/login.html`;
+    });
   }
 
-  // Verificação opcional do token (com tratamento de erro)
-  verifyToken(authToken).catch(() => {
-    localStorage.removeItem('authToken');
-    window.location.href = `${window.location.origin}/pages/login.html`;
-  });
-}
+  async function verifyToken(token) {
+    const response = await fetch(`${config.apiBaseUrl}/api/auth/verify`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
 
-// Função separada para verificar o token
-async function verifyToken(token) {
-  const response = await fetch(`https://wowmallta.servehttp.com:3000/api/auth/verify`, {
-    headers: { 'Authorization': `Bearer ${token}` }
-  });
-  
-  if (!response.ok) throw new Error('Token inválido');
-  
-  const data = await response.json();
-  updateUserUI(data.user); // Atualiza a interface do usuário
-}
+    if (!response.ok) throw new Error('Token inválido');
+
+    const data = await response.json();
+    updateUserUI(data.user); // Ex: mostrar nome no dashboard
+  }
+
+  function updateUserUI(user) {
+    const userDisplay = document.querySelector('#userDisplay');
+    if (userDisplay && user?.username) {
+      userDisplay.textContent = `Bem-vindo(a), ${user.username}`;
+    }
+  }
 });

@@ -19,7 +19,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 </head>
-<body >
+<body>
     <!-- Header/Navbar -->
     <header class="main-header">
         <div class="container">
@@ -54,20 +54,21 @@
                 <aside class="dashboard-sidebar">
                     <div class="user-profile">
                         <div class="avatar">
-                            <img src="../images/avatars/default.jpg" alt="Avatar do Jogador">
+                            <img id="user-avatar" src="../images/avatars/default.jpg" alt="Avatar do Jogador">
                             <span class="online-status"></span>
                         </div>
-                        <h2>NomeDoJogador</h2>
-                        <p>Nível 80 - <span class="class-warrior">Guerreiro</span></p>
+                        <h2 id="username-display">Carregando...</h2>
+                        <p id="user-class-level">Nível 0 - <span>Carregando...</span></p>
+                        <button id="change-character" class="btn btn-small">Alterar Personagem</button>
                     </div>
                     
                     <nav class="dashboard-menu">
                         <ul>
-                            <li class="active"><a href="#"><i class="fas fa-user"></i> Visão Geral</a></li>
-                            <li><a href="#"><i class="fas fa-cog"></i> Configurações</a></li>
-                            <li><a href="#"><i class="fas fa-history"></i> Histórico</a></li>
-                            <li><a href="#"><i class="fas fa-users"></i> Amigos</a></li>
-                            <li><a href="#"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                            <li class="active"><a href="#" data-section="overview"><i class="fas fa-user"></i> Visão Geral</a></li>
+                            <li><a href="#" data-section="settings"><i class="fas fa-cog"></i> Configurações</a></li>
+                            <li><a href="#" data-section="history"><i class="fas fa-history"></i> Histórico</a></li>
+                            <li><a href="#" data-section="friends"><i class="fas fa-users"></i> Amigos</a></li>
+                            <li><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
                         </ul>
                     </nav>
                 </aside>
@@ -75,7 +76,7 @@
                 <!-- Main Content -->
                 <div class="dashboard-content">
                     <!-- Seção de Status -->
-                    <section class="dashboard-card status-card">
+                    <section id="overview-section" class="dashboard-card status-card">
                         <div class="card-header">
                             <h3>Meu Status</h3>
                         </div>
@@ -87,7 +88,7 @@
                                     </div>
                                     <div class="status-info">
                                         <h4>Pontos de Voto</h4>
-                                        <p class="points">1,250</p>
+                                        <p class="points" id="vote-points">0</p>
                                     </div>
                                 </div>
                                 
@@ -97,7 +98,7 @@
                                     </div>
                                     <div class="status-info">
                                         <h4>Membro desde</h4>
-                                        <p>15/06/2023</p>
+                                        <p id="join-date">00/00/0000</p>
                                     </div>
                                 </div>
                                 
@@ -107,7 +108,7 @@
                                     </div>
                                     <div class="status-info">
                                         <h4>Ranking</h4>
-                                        <p>#42</p>
+                                        <p id="ranking">#0</p>
                                     </div>
                                 </div>
                                 
@@ -117,7 +118,7 @@
                                     </div>
                                     <div class="status-info">
                                         <h4>Tempo de Jogo</h4>
-                                        <p>145 horas</p>
+                                        <p id="hours-played">0 horas</p>
                                     </div>
                                 </div>
                             </div>
@@ -128,42 +129,32 @@
                     <section class="dashboard-card vote-card">
                         <div class="card-header">
                             <h3>Vote no Servidor</h3>
-                            <span class="next-vote">Próximo voto em: <strong>2h 15m</strong></span>
+                            <span class="next-vote">Próximo voto em: <strong id="next-vote-time">0h 0m</strong></span>
                         </div>
                         <div class="card-body">
                             <p>Ganhe pontos de voto a cada 12 horas para usar na nossa loja!</p>
-                            <div class="vote-sites">
-                                <div class="vote-site">
-                                    <img src="../images/vote-site1.png" alt="TopG">
-                                    <a href="#" class="btn btn-vote" disabled>
-                                        <i class="fas fa-check-circle"></i> Votar (12h)
-                                    </a>
-                                </div>
-                                <div class="vote-site">
-                                    <img src="../images/vote-site2.png" alt="XtremeTop100">
-                                    <a href="#" class="btn btn-vote">
-                                        <i class="fas fa-vote-yea"></i> Votar Agora
-                                    </a>
-                                </div>
+                            <div class="vote-sites" id="vote-sites-container">
+                                <!-- Dinamicamente preenchido pelo JavaScript -->
                             </div>
                         </div>
                     </section>
                     
                     <!-- Seção de Informações da Conta -->
-                    <section class="dashboard-card account-card">
+                    <section id="settings-section" class="dashboard-card account-card" style="display:none;">
                         <div class="card-header">
                             <h3>Minha Conta</h3>
                         </div>
                         <div class="card-body">
-                            <form class="account-form">
+                            <form class="account-form" id="account-form">
+                                <div id="form-message" class="form-message"></div>
                                 <div class="form-row">
                                     <div class="form-group">
                                         <label for="username">Nome de Usuário</label>
-                                        <input type="text" id="username" value="NomeDoJogador" readonly>
+                                        <input type="text" id="username" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Email</label>
-                                        <input type="email" id="email" value="jogador@email.com">
+                                        <input type="email" id="email">
                                     </div>
                                 </div>
                                 
@@ -182,6 +173,18 @@
                                     <button type="submit" class="btn btn-primary">Salvar Alterações</button>
                                 </div>
                             </form>
+                        </div>
+                    </section>
+                    
+                    <!-- Seção de Personagens -->
+                    <section id="characters-section" class="dashboard-card characters-card" style="display:none;">
+                        <div class="card-header">
+                            <h3>Meus Personagens</h3>
+                        </div>
+                        <div class="card-body">
+                            <div id="characters-list">
+                                <!-- Dinamicamente preenchido pelo JavaScript -->
+                            </div>
                         </div>
                     </section>
                     
@@ -227,11 +230,45 @@
         </div>
     </main>
 
+    <!-- Modal para seleção de personagem -->
+    <div id="character-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Selecione seu personagem principal</h3>
+            <div id="modal-characters-list" class="characters-grid">
+                <!-- Dinamicamente preenchido pelo JavaScript -->
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="main-footer">
         <div class="container">
             <div class="footer-grid">
-                <!-- ... (manter o mesmo footer das outras páginas) ... -->
+                <div class="footer-col">
+                    <h4>Sobre o Mallta</h4>
+                    <p>O melhor servidor Wrath of the Lich King com custom content balanceado e comunidade ativa.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="shop.html">Loja</a></li>
+                        <li><a href="armory.html">Armory</a></li>
+                        <li><a href="forum.html">Fórum</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Suporte</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Regras</a></li>
+                        <li><a href="#">Discord</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Mallta WoW. Todos os direitos reservados.</p>
             </div>
         </div>
     </footer>

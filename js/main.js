@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
   // Configurações globais
   const config = {
-      apiBaseUrl: window.config?.apiBaseUrl || 'https://wowmallta.servehttp.com:3000'
+      apiBaseUrl: window.config?.apiBaseUrl || 'https://api-backend-server.onrender.com'
   };
 
   // ==================== NAVEGAÇÃO ==================== //

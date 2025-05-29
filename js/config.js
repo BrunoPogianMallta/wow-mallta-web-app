@@ -1,4 +1,4 @@
 window.config = {
-    apiBaseUrl: 'https://wowmallta.servehttp.com:3000' // ou sua URL real
+    apiBaseUrl: 'https://api-backend-server.onrender.com' 
   };
   
