@@ -563,3 +563,10 @@ a:hover {
     margin: 0 auto;
     text-align: center;
 }
+
+#user-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* cobre todo o espaço, cortando o que passar do limite */
+  display: block; /* remove aquele espaçamento em linha padrão das imgs */
+}

@@ -1,0 +1,21 @@
+export const selectors = {
+  logoutBtn: '#logout-btn',
+  changeCharacterBtn: '#change-character',
+  characterModal: '#character-modal',
+  closeModal: '.close-modal',
+  menuLinks: '.dashboard-menu a[data-section]',
+  dashboardSections: '.dashboard-content > section',
+  userAvatar: '#user-avatar',
+  usernameDisplay: '#username-display',
+  userClassLevel: '#user-class-level',
+  votePoints: '#vote-points',
+  nextVoteTime: '#next-vote-time',
+  voteSitesContainer: '#vote-sites-container',
+  accountForm: '#account-form',
+  formMessage: '#form-message',
+  hoursPlayed: '#hours-played',
+  joinDate: '#join-date',
+  ranking: '#ranking',
+  charactersList: '#characters-list',
+  modalCharactersList: '#modal-characters-list'
+};
