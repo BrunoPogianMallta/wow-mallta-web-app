@@ -12,6 +12,7 @@
     <!-- CSS -->
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/pages/_dashboard.css">
+    <link rel="stylesheet" href="../css/pages/_character-modal.css">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -65,7 +66,7 @@
                     <nav class="dashboard-menu">
                         <ul>
                             <li class="active"><a href="#" data-section="overview"><i class="fas fa-user"></i> Visão Geral</a></li>
-                            <li><a href="#" data-section="settings"><i class="fas fa-cog"></i> Configurações</a></li>
+                            <li><a href="#" data-section="settings" id="open-account-settings"><i class="fas fa-cog"></i> Configurações</a></li>
                             <li><a href="#" data-section="history"><i class="fas fa-history"></i> Histórico</a></li>
                             <li><a href="#" data-section="friends"><i class="fas fa-users"></i> Amigos</a></li>
                             <li><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
@@ -232,14 +233,37 @@
 
     <!-- Modal para seleção de personagem -->
     <div id="character-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h3>Selecione seu personagem principal</h3>
-            <div id="modal-characters-list" class="characters-grid">
-                <!-- Dinamicamente preenchido pelo JavaScript -->
-            </div>
-        </div>
-    </div>
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <h2>Selecione seu personagem principal</h2>
+    <div id="modal-characters-list"></div>
+  </div>
+</div>
+
+<!-- Modal de Configurações da Conta -->
+<div id="account-settings-modal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <h2>Editar Conta</h2>
+    <form id="account-settings-form" class="account-form">
+      <div class="form-group">
+        <label for="modal-email">Email</label>
+        <input type="email" id="modal-email" required>
+      </div>
+      <div class="form-group">
+        <label for="modal-current-password">Senha Atual</label>
+        <input type="password" id="modal-current-password" required>
+      </div>
+      <div class="form-group">
+        <label for="modal-new-password">Nova Senha</label>
+        <input type="password" id="modal-new-password">
+      </div>
+      <button type="submit" class="btn btn-primary">Salvar</button>
+    </form>
+  </div>
+</div>
+
 
     <!-- Footer -->
     <footer class="main-footer">

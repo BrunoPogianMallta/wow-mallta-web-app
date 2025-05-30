@@ -90,10 +90,10 @@ a:hover {
     transition: all 0.3s ease;
 }
 
-.main-header.scrolled {
+/* .main-header.scrolled {
     padding: 10px 0;
     background-color: rgba(26, 26, 46, 0.98);
-}
+} */
 
 .logo {
     display: flex;

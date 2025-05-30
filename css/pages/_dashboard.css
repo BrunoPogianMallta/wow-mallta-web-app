@@ -1,28 +1,62 @@
-/* pages/_dashboard.css - Estilos do Painel do Usuário */
+/* pages/_dashboard.css - Estilos completos para o Painel do Usuário */
 
+/* Variáveis para cores - facilita manutenção */
+:root {
+    --primary-color: #054d9b;
+    --success-color: #28a745;
+    --dark-color: #333;
+}
+
+/* Reset box-sizing para todos os elementos */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Container geral da seção do dashboard */
 .dashboard-section {
     padding: 2rem 0;
-    min-height: calc(100vh - 70px);
+    min-height: calc(100vh - 70px); /* Altura total menos header fixo */
+    margin-top: 70px; /* Compensa o header fixo */
     background-color: #f8f9fa;
 }
 
+/* Container centralizado com grid para sidebar + conteúdo */
 .dashboard-container {
     display: grid;
     grid-template-columns: 250px 1fr;
     gap: 2rem;
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 1rem;
 }
 
-/* Sidebar */
+/* Header fixo (geral) */
+.main-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 80px;
+    /* background: white; */
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    padding: 0 1.5rem;
+}
+
+/* Sidebar com sticky para rolar junto com a página */
 .dashboard-sidebar {
+    position: sticky;
+    top: 90px; /* 70px do header + 20px de espaçamento */
+    height: calc(100vh - 90px);
+    overflow-y: auto;
     background-color: white;
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     padding: 1.5rem;
-    height: fit-content;
 }
 
+/* Perfil do usuário na sidebar */
 .user-profile {
     text-align: center;
     margin-bottom: 2rem;
@@ -44,6 +78,7 @@
     object-fit: cover;
 }
 
+/* Status online no avatar */
 .online-status {
     position: absolute;
     bottom: 5px;
@@ -55,9 +90,11 @@
     border: 2px solid white;
 }
 
+/* Nome e texto do perfil */
 .user-profile h2 {
     font-size: 1.3rem;
     margin-bottom: 0.3rem;
+    color: var(--dark-color);
 }
 
 .user-profile p {
@@ -65,12 +102,16 @@
     font-size: 0.9rem;
 }
 
+/* Exemplo de classe para classes específicas (ex: warrior) */
 .class-warrior {
     color: #C79C6E;
 }
 
+/* Menu da sidebar */
 .dashboard-menu ul {
     list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .dashboard-menu li {
@@ -84,7 +125,7 @@
     color: #555;
     text-decoration: none;
     border-radius: 4px;
-    transition: all 0.2s ease;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .dashboard-menu a i {
@@ -103,17 +144,19 @@
     color: white;
 }
 
-/* Conteúdo Principal */
+/* Conteúdo principal do dashboard */
 .dashboard-content {
     display: grid;
     grid-template-columns: 1fr;
     gap: 1.5rem;
+    padding-bottom: 2rem; /* Espaço no fim para scroll */
 }
 
+/* Cartões dentro do conteúdo */
 .dashboard-card {
     background-color: white;
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     overflow: hidden;
 }
 
@@ -140,7 +183,7 @@
     padding: 1.5rem;
 }
 
-/* Grid de Status */
+/* Grid de status do usuário */
 .status-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -184,7 +227,7 @@
     color: var(--primary-color) !important;
 }
 
-/* Seção de Votação */
+/* Seção de votação com botões */
 .vote-sites {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -212,6 +255,16 @@
     gap: 0.5rem;
     padding: 0.6rem 1.2rem;
     font-size: 0.9rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-vote:hover:not([disabled]) {
+    background-color: #0056b3;
 }
 
 .btn-vote[disabled] {
@@ -220,7 +273,7 @@
     background-color: #ddd;
 }
 
-/* Formulário de Conta */
+/* Formulário de conta */
 .account-form .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -240,16 +293,29 @@
     font-size: 0.9rem;
 }
 
-.account-form input {
+.account-form input,
+.account-form select,
+.account-form textarea {
     width: 100%;
     padding: 0.7rem 1rem;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 0.95rem;
+    font-family: inherit;
+    transition: border-color 0.2s ease;
+}
+
+.account-form input:focus,
+.account-form select:focus,
+.account-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px var(--primary-color);
 }
 
 .account-form input[readonly] {
     background-color: #f5f5f5;
+    cursor: not-allowed;
 }
 
 .form-actions {
@@ -257,7 +323,7 @@
     margin-top: 1rem;
 }
 
-/* Atalhos Rápidos */
+/* Atalhos rápidos */
 .shortcuts-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -294,105 +360,9 @@
     font-weight: 600;
 }
 
-/* Responsividade */
-@media (max-width: 992px) {
-    .dashboard-container {
-        grid-template-columns: 1fr;
-    }
-    
-    .dashboard-sidebar {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
-        align-items: center;
-    }
-    
-    .user-profile {
-        display: flex;
-        align-items: center;
-        text-align: left;
-        margin-bottom: 0;
-    }
-    
-    .avatar {
-        margin: 0 1rem 0 0;
-        width: 60px;
-        height: 60px;
-    }
-    
-    .dashboard-menu ul {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-    }
-    
-    .account-form .form-row {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-}
+/* RESPONSIVIDADE */
 
-@media (max-width: 576px) {
-    .status-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .vote-sites {
-        grid-template-columns: 1fr;
-    }
-    
-    .shortcuts-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-/* pages/_dashboard.css - Versão corrigida */
-
-.dashboard-section {
-    padding: 2rem 0;
-    min-height: calc(100vh - 70px); /* Altura total - altura do header */
-    margin-top: 70px; /* Compensa o header fixo */
-    background-color: #f8f9fa;
-    box-sizing: border-box;
-}
-
-.dashboard-container {
-    display: grid;
-    grid-template-columns: 250px 1fr;
-    gap: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem; /* Adicionado padding para não colar nas bordas */
-}
-
-/* Header fixo - importante para o cálculo correto */
-.main-header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-}
-
-/* Ajustes na sidebar */
-.dashboard-sidebar {
-    position: sticky;
-    top: 90px; /* 70px header + 20px de margem */
-    height: calc(100vh - 90px);
-    overflow-y: auto;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    padding: 1.5rem;
-}
-
-/* Conteúdo principal */
-.dashboard-content {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    padding-bottom: 2rem; /* Espaço no final */
-}
-
-/* Ajuste para mobile */
+/* Tablets e telas médias */
 @media (max-width: 992px) {
     .dashboard-container {
         grid-template-columns: 1fr;
@@ -403,6 +373,7 @@
         position: static;
         height: auto;
         top: auto;
+        margin-bottom: 2rem;
     }
     
     .user-profile {
@@ -412,9 +383,24 @@
     
     .avatar {
         margin: 0 auto 1rem;
+        width: 80px;
+        height: 80px;
+    }
+    
+    .dashboard-menu ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+    }
+    
+    .account-form .form-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
     }
 }
 
+/* Celulares e telas pequenas */
 @media (max-width: 576px) {
     .dashboard-section {
         padding: 1rem 0;
@@ -430,5 +416,17 @@
     
     .card-body {
         padding: 1rem;
+    }
+    
+    .status-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .vote-sites {
+        grid-template-columns: 1fr;
+    }
+    
+    .shortcuts-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }

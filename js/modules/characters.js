@@ -29,3 +29,24 @@ function selectCharacter(char, userProfile, selectors) {
     document.querySelector(selectors.characterModal).style.display = 'none';
     updateUserProfileUI(userProfile, selectors);
 }
+
+
+export async function renderCharactersModal(characters) {
+  const container = document.getElementById('modal-characters-list');
+  container.innerHTML = ''; 
+
+  characters.forEach(char => {
+    const card = document.createElement('div');
+    card.classList.add('character-card');
+    card.innerHTML = `
+      <img src="../images/${String(char.race).padStart(3, '0')}.png" alt="${char.name}">
+      <p>${char.name} - Nível ${char.level}</p>
+    `;
+    card.addEventListener('click', () => {
+      saveSelectedCharacter(char);
+      updateCharacterInfoUI(char);
+      closeCharacterModal();
+    });
+    container.appendChild(card);
+  });
+}
