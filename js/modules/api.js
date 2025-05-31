@@ -20,16 +20,13 @@ export async function apiRequest(endpoint, method = 'GET', body = null) {
       options.body = JSON.stringify(body);
     }
 
-    // Log da requisição
-    console.log(`[API] Requisição: ${method} ${url}`);
-    console.log(`[API] Headers:`, options.headers);
+   
     if (body) console.log(`[API] Body:`, body);
 
     const response = await fetch(url, options);
     const contentType = response.headers.get('Content-Type') || '';
 
-    console.log(`[API] Status: ${response.status}`);
-    console.log(`[API] Content-Type: ${contentType}`);
+    
 
     if (!contentType.includes('application/json')) {
       console.warn('[API] Resposta não é JSON:', await response.text());
@@ -37,8 +34,7 @@ export async function apiRequest(endpoint, method = 'GET', body = null) {
     }
 
     const data = await response.json();
-    console.log('[API] Resposta JSON:', data);
-
+   
     // Se for um objeto e indicar falha, lança erro
     if (!response.ok || (typeof data === 'object' && data.success === false)) {
       const errorMsg = data.message || 'Erro desconhecido';
