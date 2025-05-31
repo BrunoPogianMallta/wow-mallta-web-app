@@ -2,17 +2,28 @@ import { apiRequest } from './api.js';
 import { updateCharacterInfoUI } from './userProfile.js';
 import { classMap } from '../utils/classMap.js';
 
+const CHARACTER_CACHE_KEY = 'cachedCharacters';
+const CHARACTER_CACHE_TIME_KEY = 'cachedCharactersTimestamp';
+const CACHE_DURATION_MS = 60 * 60 * 1000; // 1 hora
+
 export async function setupCharacterSelectionModal() {
   const modal = document.getElementById('character-modal');
   const container = document.getElementById('modal-characters-list');
   const closeModal = document.querySelector('.close-modal');
   const changeCharBtn = document.getElementById('change-character');
 
-  // Evento para abrir modal só quando clicar no botão
   changeCharBtn.addEventListener('click', async () => {
-    container.innerHTML = '';
-    const characters = await apiRequest('/api/characters/');
-    if (!characters) return;
+    container.innerHTML = '<p>Carregando personagens...</p>';
+    modal.style.display = 'block';
+
+    const characters = await getCachedCharacters();
+
+    container.innerHTML = ''; // Limpa loading
+
+    if (!characters || characters.length === 0) {
+      container.innerHTML = '<p>Nenhum personagem encontrado.</p>';
+      return;
+    }
 
     characters.forEach(char => {
       const className = classMap[char.class] || 'unknown';
@@ -29,8 +40,6 @@ export async function setupCharacterSelectionModal() {
       div.addEventListener('click', () => selectCharacter(char.guid));
       container.appendChild(div);
     });
-
-    modal.style.display = 'block';
   });
 
   closeModal.addEventListener('click', () => {
@@ -38,7 +47,7 @@ export async function setupCharacterSelectionModal() {
   });
 
   async function selectCharacter(characterId) {
-    const characters = await apiRequest('/api/characters/');
+    const characters = await getCachedCharacters();
     const selected = characters.find(c => c.guid === characterId);
     if (!selected) return;
 
@@ -48,19 +57,42 @@ export async function setupCharacterSelectionModal() {
   }
 }
 
-// Função para carregar personagem principal (vindo do backend) e salvar localStorage
 export async function loadPrimaryCharacter() {
-  // Supondo que seu backend já retorne o personagem principal em alguma rota
-  const userProfile = await apiRequest('/api/user/profile'); 
+  const userProfile = await apiRequest('/api/user/profile');
 
   if (!userProfile || !userProfile.primaryCharacter) {
-    // Se não tem personagem principal, aí sim deixa o localStorage vazio e não exibe nada
     return null;
   }
 
-  // Salva o personagem principal no localStorage para manter coerência
   localStorage.setItem('selectedCharacterId', userProfile.primaryCharacter.guid);
   updateCharacterInfoUI(userProfile.primaryCharacter);
-
   return userProfile.primaryCharacter;
+}
+
+// ✅ Usa cache local com expiração
+async function getCachedCharacters() {
+  const cached = localStorage.getItem(CHARACTER_CACHE_KEY);
+  const timestamp = localStorage.getItem(CHARACTER_CACHE_TIME_KEY);
+
+  const now = Date.now();
+
+  if (cached && timestamp && (now - parseInt(timestamp, 10)) < CACHE_DURATION_MS) {
+    return JSON.parse(cached);
+  }
+
+  try {
+    const characters = await apiRequest('/api/characters/');
+    localStorage.setItem(CHARACTER_CACHE_KEY, JSON.stringify(characters));
+    localStorage.setItem(CHARACTER_CACHE_TIME_KEY, now.toString());
+    return characters;
+  } catch (err) {
+    console.error('Erro ao buscar personagens:', err);
+    return [];
+  }
+}
+
+// (Opcional) função para limpar cache manualmente
+export function clearCharacterCache() {
+  localStorage.removeItem(CHARACTER_CACHE_KEY);
+  localStorage.removeItem(CHARACTER_CACHE_TIME_KEY);
 }

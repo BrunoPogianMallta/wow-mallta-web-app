@@ -570,3 +570,31 @@ a:hover {
   object-fit: cover; /* cobre todo o espaço, cortando o que passar do limite */
   display: block; /* remove aquele espaçamento em linha padrão das imgs */
 }
+
+.toast-message {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: #4caf50;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  font-weight: 600;
+  z-index: 9999;
+  font-family: sans-serif;
+}
+
+.toast-error {
+  background: #f44336;
+}
+
+.toast-info {
+  background: #2196f3;
+}
+
+.toast-message.hide {
+  opacity: 0;
+}
