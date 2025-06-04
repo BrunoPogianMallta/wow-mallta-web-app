@@ -1,0 +1,95 @@
+.shop-item-card {
+  background-color: #1e1e2f;
+  border: 1px solid #444466;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  width: 220px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.shop-item-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+}
+
+.item-image {
+  background-color: #2a2a40;
+  padding: 10px;
+  text-align: center;
+}
+
+.item-image img {
+  max-width: 100%;
+  height: auto;
+  image-rendering: pixelated; /* para ícones de WoW ficarem mais nítidos */
+}
+
+.item-info {
+  padding: 12px 15px;
+  color: #ddd;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.item-name {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+  font-size: 1.1rem;
+}
+
+/* Cores baseadas na raridade do item */
+.rarity-comum {
+  color: #ffffff;
+}
+
+.rarity-incomum {
+  color: #1eff00; /* verde */
+}
+
+.rarity-raro {
+  color: #0070dd; /* azul */
+}
+
+.rarity-epico {
+  color: #a335ee; /* roxo */
+}
+
+.rarity-lendario {
+  color: #ff8000; /* laranja */
+}
+
+.item-category {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: #9999bb;
+  margin-bottom: 10px;
+}
+
+.item-price {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 12px;
+  color: #ffd700; /* amarelo ouro */
+}
+
+.btn-add-cart {
+  background-color: #4b7bec;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: 600;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  align-self: flex-start;
+}
+
+.btn-add-cart:hover {
+  background-color: #3867d6;
+}

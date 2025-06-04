@@ -1,304 +1,304 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Perfil | Mallta WoW</title>
-    <meta name="description" content="Área do jogador - Mallta WoW">
-    
-    <!-- Favicon -->
-    <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
-    
-    <!-- CSS -->
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/pages/_dashboard.css">
-    <link rel="stylesheet" href="../css/pages/_character-modal.css">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-</head>
-<body>
-    <!-- Header/Navbar -->
-    <header class="main-header">
-        <div class="container">
-            <div class="logo">
-                <a href="../index.html">
-                    <img src="../images/logomallta.png" alt="Mallta WoW Logo">
-                    <span>Mallta WoW</span>
-                </a>
-            </div>
-            
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="shop.html">Loja</a></li>
-                    <li><a href="armory.html">Armory</a></li>
-                    <li><a href="forum.html">Fórum</a></li>
-                    <li class="active"><a href="dashboard.html" class="btn-login">Meu Perfil</a></li>
-                </ul>
-            </nav>
-            
-            <div class="mobile-menu-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
-        </div>
-    </header>
-
-    <!-- Dashboard Section -->
-    <main class="dashboard-section">
-        <div class="container">
-            <div class="dashboard-container">
-                <!-- Sidebar -->
-                <aside class="dashboard-sidebar">
-                    <div class="user-profile">
-                        <div class="avatar">
-                            <img id="user-avatar"  alt="Avatar do Jogador">
-                            <span class="online-status"></span>
-                        </div>
-                        <h2 id="username-display">Carregando...</h2>
-                        <p id="user-class-level">Nível 0 - <span>Carregando...</span></p>
-                        <button id="change-character" class="btn btn-small">Alterar Personagem</button>
-                    </div>
-                    
-                    <nav class="dashboard-menu">
-                        <ul>
-                            <li class="active"><a href="#" data-section="overview"><i class="fas fa-user"></i> Visão Geral</a></li>
-                            <li><a href="#" data-section="settings" id="open-account-settings"><i class="fas fa-cog"></i> Configurações</a></li>
-                            <li><a href="#" data-section="history"><i class="fas fa-history"></i> Histórico</a></li>
-                            <li><a href="#" data-section="friends"><i class="fas fa-users"></i> Amigos</a></li>
-                            <li><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
-                        </ul>
-                    </nav>
-                </aside>
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Meu Perfil | Mallta WoW</title>
+        <meta name="description" content="Área do jogador - Mallta WoW">
+        
+        <!-- Favicon -->
+        <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+        
+        <!-- CSS -->
+        <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../css/pages/_dashboard.css">
+        <link rel="stylesheet" href="../css/pages/_character-modal.css">
+        
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <!-- Header/Navbar -->
+        <header class="main-header">
+            <div class="container">
+                <div class="logo">
+                    <a href="../index.html">
+                        <img src="../images/logomallta.png" alt="Mallta WoW Logo">
+                        <span>Mallta WoW</span>
+                    </a>
+                </div>
                 
-                <!-- Main Content -->
-                <div class="dashboard-content">
-                    <!-- Seção de Status -->
-                    <section id="overview-section" class="dashboard-card status-card">
-                        <div class="card-header">
-                            <h3>Meu Status</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="status-grid">
-                                <div class="status-item">
-                                    <div class="status-icon">
-                                        <i class="fas fa-coins"></i>
-                                    </div>
-                                    <div class="status-info">
-                                        <h4>Pontos de Voto</h4>
-                                        <p class="points" id="vote-points">0</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="status-item">
-                                    <div class="status-icon">
-                                        <i class="fas fa-calendar-alt"></i>
-                                    </div>
-                                    <div class="status-info">
-                                        <h4>Membro desde</h4>
-                                        <p id="join-date">00/00/0000</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="status-item">
-                                    <div class="status-icon">
-                                        <i class="fas fa-trophy"></i>
-                                    </div>
-                                    <div class="status-info">
-                                        <h4>Ranking</h4>
-                                        <p id="ranking">#0</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="status-item">
-                                    <div class="status-icon">
-                                        <i class="fas fa-clock"></i>
-                                    </div>
-                                    <div class="status-info">
-                                        <h4>Tempo de Jogo</h4>
-                                        <p id="hours-played">0 horas</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    
-                    <!-- Seção de Votação -->
-                    <section class="dashboard-card vote-card">
-                        <div class="card-header">
-                            <h3>Vote no Servidor</h3>
-                            <span class="next-vote">Próximo voto em: <strong id="next-vote-time">0h 0m</strong></span>
-                        </div>
-                        <div class="card-body">
-                            <p>Ganhe pontos de voto a cada 12 horas para usar na nossa loja!</p>
-                            <div class="vote-sites" id="vote-sites-container">
-                                <!-- Dinamicamente preenchido pelo JavaScript -->
-                            </div>
-                        </div>
-                    </section>
-                    
-                    <!-- Seção de Informações da Conta -->
-                    <section id="settings-section" class="dashboard-card account-card" style="display:none;">
-                        <div class="card-header">
-                            <h3>Minha Conta</h3>
-                        </div>
-                        <div class="card-body">
-                            <form class="account-form" id="account-form">
-                                <div id="form-message" class="form-message"></div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="username">Nome de Usuário</label>
-                                        <input type="text" id="username" readonly>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email">Email</label>
-                                        <input type="email" id="email">
-                                    </div>
-                                </div>
-                                
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="current-password">Senha Atual</label>
-                                        <input type="password" id="current-password">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="new-password">Nova Senha</label>
-                                        <input type="password" id="new-password">
-                                    </div>
-                                </div>
-                                
-                                <div class="form-actions">
-                                    <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-                                </div>
-                            </form>
-                        </div>
-                    </section>
-                    
-                    <!-- Seção de Personagens -->
-                    <section id="characters-section" class="dashboard-card characters-card" style="display:none;">
-                        <div class="card-header">
-                            <h3>Meus Personagens</h3>
-                        </div>
-                        <div class="card-body">
-                            <div id="characters-list">
-                                <!-- Dinamicamente preenchido pelo JavaScript -->
-                            </div>
-                        </div>
-                    </section>
-                    
-                    <!-- Seção de Atalhos -->
-                    <section class="dashboard-card shortcuts-card">
-                        <div class="card-header">
-                            <h3>Atalhos Rápidos</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="shortcuts-grid">
-                                <a href="shop.html" class="shortcut-item">
-                                    <div class="shortcut-icon">
-                                        <i class="fas fa-shopping-cart"></i>
-                                    </div>
-                                    <span>Loja Virtual</span>
-                                </a>
-                                
-                                <a href="armory.html" class="shortcut-item">
-                                    <div class="shortcut-icon">
-                                        <i class="fas fa-shield-alt"></i>
-                                    </div>
-                                    <span>Armory</span>
-                                </a>
-                                
-                                <a href="#" class="shortcut-item">
-                                    <div class="shortcut-icon">
-                                        <i class="fas fa-ticket-alt"></i>
-                                    </div>
-                                    <span>Suporte</span>
-                                </a>
-                                
-                                <a href="#" class="shortcut-item">
-                                    <div class="shortcut-icon">
-                                        <i class="fas fa-gift"></i>
-                                    </div>
-                                    <span>Recompensas</span>
-                                </a>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Modal para seleção de personagem -->
-    <div id="character-modal" class="modal">
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close-modal">&times;</span>
-    <h2>Selecione seu personagem principal</h2>
-    <div id="modal-characters-list"></div>
-  </div>
-</div>
-
-<!-- Modal de Configurações da Conta -->
-<div id="account-settings-modal" class="modal">
-  <div class="modal-content">
-    <span class="close-modal">&times;</span>
-    <h2>Editar Conta</h2>
-    <form id="account-settings-form" class="account-form">
-      <div class="form-group">
-        <label for="modal-email">Email</label>
-        <input type="email" id="modal-email" required>
-      </div>
-      <div class="form-group">
-        <label for="modal-current-password">Senha Atual</label>
-        <input type="password" id="modal-current-password" required>
-      </div>
-      <div class="form-group">
-        <label for="modal-new-password">Nova Senha</label>
-        <input type="password" id="modal-new-password">
-      </div>
-      <button type="submit" class="btn btn-primary">Salvar</button>
-    </form>
-  </div>
-</div>
-
-
-    <!-- Footer -->
-    <footer class="main-footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h4>Sobre o Mallta</h4>
-                    <p>O melhor servidor Wrath of the Lich King com custom content balanceado e comunidade ativa.</p>
-                </div>
-                <div class="footer-col">
-                    <h4>Links Rápidos</h4>
+                <nav class="main-nav">
                     <ul>
                         <li><a href="../index.html">Home</a></li>
                         <li><a href="shop.html">Loja</a></li>
                         <li><a href="armory.html">Armory</a></li>
                         <li><a href="forum.html">Fórum</a></li>
+                        <li class="active"><a href="dashboard.html" class="btn-login">Meu Perfil</a></li>
                     </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Suporte</h4>
-                    <ul>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Regras</a></li>
-                        <li><a href="#">Discord</a></li>
-                    </ul>
+                </nav>
+                
+                <div class="mobile-menu-toggle">
+                    <i class="fas fa-bars"></i>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2023 Mallta WoW. Todos os direitos reservados.</p>
-            </div>
-        </div>
-    </footer>
+        </header>
 
-    <!-- Scripts -->
-    <script type="module" src="../js/main.js"></script>
-    <script type="module" src="../js/dashboard.js"></script>
-</body>
-</html>
+        <!-- Dashboard Section -->
+        <main class="dashboard-section">
+            <div class="container">
+                <div class="dashboard-container">
+                    <!-- Sidebar -->
+                    <aside class="dashboard-sidebar">
+                        <div class="user-profile">
+                            <div class="avatar">
+                                <img id="user-avatar"  alt="Avatar do Jogador">
+                                <span class="online-status"></span>
+                            </div>
+                            <h2 id="username-display">Carregando...</h2>
+                            <p id="user-class-level">Nível 0 - <span>Carregando...</span></p>
+                            <button id="change-character" class="btn btn-small">Alterar Personagem</button>
+                        </div>
+                        
+                        <nav class="dashboard-menu">
+                            <ul>
+                                <li class="active"><a href="#" data-section="overview"><i class="fas fa-user"></i> Visão Geral</a></li>
+                                <li><a href="#" data-section="settings" id="open-account-settings"><i class="fas fa-cog"></i> Configurações</a></li>
+                                <li><a href="#" data-section="history"><i class="fas fa-history"></i> Histórico</a></li>
+                                <li><a href="#" data-section="friends"><i class="fas fa-users"></i> Amigos</a></li>
+                                <li><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                            </ul>
+                        </nav>
+                    </aside>
+                    
+                    <!-- Main Content -->
+                    <div class="dashboard-content">
+                        <!-- Seção de Status -->
+                        <section id="overview-section" class="dashboard-card status-card">
+                            <div class="card-header">
+                                <h3>Meu Status</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="status-grid">
+                                    <div class="status-item">
+                                        <div class="status-icon">
+                                            <i class="fas fa-coins"></i>
+                                        </div>
+                                        <div class="status-info">
+                                            <h4>Pontos de Voto</h4>
+                                            <p class="points" id="vote-points">0</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="status-item">
+                                        <div class="status-icon">
+                                            <i class="fas fa-calendar-alt"></i>
+                                        </div>
+                                        <div class="status-info">
+                                            <h4>Membro desde</h4>
+                                            <p id="join-date">00/00/0000</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="status-item">
+                                        <div class="status-icon">
+                                            <i class="fas fa-trophy"></i>
+                                        </div>
+                                        <div class="status-info">
+                                            <h4>Ranking</h4>
+                                            <p id="ranking">#0</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="status-item">
+                                        <div class="status-icon">
+                                            <i class="fas fa-clock"></i>
+                                        </div>
+                                        <div class="status-info">
+                                            <h4>Tempo de Jogo</h4>
+                                            <p id="hours-played">0 horas</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        
+                        <!-- Seção de Votação -->
+                        <section class="dashboard-card vote-card">
+                            <div class="card-header">
+                                <h3>Vote no Servidor</h3>
+                                <span class="next-vote">Próximo voto em: <strong id="next-vote-time">0h 0m</strong></span>
+                            </div>
+                            <div class="card-body">
+                                <p>Ganhe pontos de voto a cada 12 horas para usar na nossa loja!</p>
+                                <div class="vote-sites" id="vote-sites-container">
+                                    <!-- Dinamicamente preenchido pelo JavaScript -->
+                                </div>
+                            </div>
+                        </section>
+                        
+                        <!-- Seção de Informações da Conta -->
+                        <section id="settings-section" class="dashboard-card account-card" style="display:none;">
+                            <div class="card-header">
+                                <h3>Minha Conta</h3>
+                            </div>
+                            <div class="card-body">
+                                <form class="account-form" id="account-form">
+                                    <div id="form-message" class="form-message"></div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="username">Nome de Usuário</label>
+                                            <input type="text" id="username" readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input type="email" id="email">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="current-password">Senha Atual</label>
+                                            <input type="password" id="current-password">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="new-password">Nova Senha</label>
+                                            <input type="password" id="new-password">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-actions">
+                                        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </section>
+                        
+                        <!-- Seção de Personagens -->
+                        <section id="characters-section" class="dashboard-card characters-card" style="display:none;">
+                            <div class="card-header">
+                                <h3>Meus Personagens</h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="characters-list">
+                                    <!-- Dinamicamente preenchido pelo JavaScript -->
+                                </div>
+                            </div>
+                        </section>
+                        
+                        <!-- Seção de Atalhos -->
+                        <section class="dashboard-card shortcuts-card">
+                            <div class="card-header">
+                                <h3>Atalhos Rápidos</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="shortcuts-grid">
+                                    <a href="shop.html" class="shortcut-item">
+                                        <div class="shortcut-icon">
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </div>
+                                        <span>Loja Virtual</span>
+                                    </a>
+                                    
+                                    <a href="armory.html" class="shortcut-item">
+                                        <div class="shortcut-icon">
+                                            <i class="fas fa-shield-alt"></i>
+                                        </div>
+                                        <span>Armory</span>
+                                    </a>
+                                    
+                                    <a href="#" class="shortcut-item">
+                                        <div class="shortcut-icon">
+                                            <i class="fas fa-ticket-alt"></i>
+                                        </div>
+                                        <span>Suporte</span>
+                                    </a>
+                                    
+                                    <a href="#" class="shortcut-item">
+                                        <div class="shortcut-icon">
+                                            <i class="fas fa-gift"></i>
+                                        </div>
+                                        <span>Recompensas</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Modal para seleção de personagem -->
+        <div id="character-modal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>Selecione seu personagem principal</h2>
+        <div id="modal-characters-list"></div>
+    </div>
+    </div>
+
+    <!-- Modal de Configurações da Conta -->
+    <div id="account-settings-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>Editar Conta</h2>
+        <form id="account-settings-form" class="account-form">
+        <div class="form-group">
+            <label for="modal-email">Email</label>
+            <input type="email" id="modal-email" required>
+        </div>
+        <div class="form-group">
+            <label for="modal-current-password">Senha Atual</label>
+            <input type="password" id="modal-current-password" required>
+        </div>
+        <div class="form-group">
+            <label for="modal-new-password">Nova Senha</label>
+            <input type="password" id="modal-new-password">
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        </form>
+    </div>
+    </div>
+
+
+        <!-- Footer -->
+        <footer class="main-footer">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-col">
+                        <h4>Sobre o Mallta</h4>
+                        <p>O melhor servidor Wrath of the Lich King com custom content balanceado e comunidade ativa.</p>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Links Rápidos</h4>
+                        <ul>
+                            <li><a href="../index.html">Home</a></li>
+                            <li><a href="shop.html">Loja</a></li>
+                            <li><a href="armory.html">Armory</a></li>
+                            <li><a href="forum.html">Fórum</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Suporte</h4>
+                        <ul>
+                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">Regras</a></li>
+                            <li><a href="#">Discord</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2023 Mallta WoW. Todos os direitos reservados.</p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Scripts -->
+        <script type="module" src="../js/main.js"></script>
+        <script type="module" src="../js/dashboard.js"></script>
+    </body>
+    </html>

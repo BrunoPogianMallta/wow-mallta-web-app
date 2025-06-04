@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Loja | Mallta WoW</title>
+  
+  <!-- Fonts e ícones -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/pages/_shop.css" />
+  <link rel="stylesheet" href="../css/pages/_card_shop.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  <!-- Tooltip WoW -->
+  <script src="https://cdn.cavernoftime.com/api/tooltip.js" defer></script>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="main-header">
+    <div class="container">
+      <div class="logo">
+        <a href="../index.html">
+          <img src="../images/logomallta.png" alt="Mallta WoW Logo" />
+          <span>Mallta WoW</span>
+        </a>
+      </div>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li class="active"><a href="shop.html">Loja</a></li>
+          <li><a href="dashboard.html">Meu Perfil</a></li>
+          <li>
+            <a href="cart.html"><i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span></a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- BANNER -->
+  <div class="shop-banner-carousel">
+    <div class="banner-slide" style="background-image: url('../images/banner1.png');">
+      <div class="banner-content">
+        <h2>Promoções Épicas</h2>
+        <p>Descontos especiais em itens lendários esta semana</p>
+        <button class="banner-button">Ver Ofertas</button>
+      </div>
+    </div>
+    <div class="banner-slide" style="background-image: url('../images/banner2.png');">
+      <div class="banner-content">
+        <h2>Novas Montarias</h2>
+        <p>Adquira as montarias exclusivas da temporada</p>
+        <button class="banner-button">Explorar</button>
+      </div>
+    </div>
+    <div class="banner-slide" style="background-image: url('../images/banner3.png');">
+      <div class="banner-content">
+        <h2>Pacotes Especiais</h2>
+        <p>Combos com itens exclusivos para todas as classes</p>
+        <button class="banner-button">Comprar Agora</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <main class="container shop-container">
+    <!-- SIDEBAR -->
+    <aside class="shop-sidebar">
+      <div class="sidebar-section">
+        <h3>Categorias</h3>
+        <ul class="category-list" id="categoryList">
+          <li class="active" data-category="all"><a href="#">Todos os Itens</a></li>
+          <li data-category="armor"><a href="#">Armaduras</a></li>
+          <li data-category="weapon"><a href="#">Armas</a></li>
+          <li data-category="mount"><a href="#">Montarias</a></li>
+          <li data-category="pet"><a href="#">Mascotes</a></li>
+          <li data-category="service"><a href="#">Serviços</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-section">
+        <h3>Filtrar por</h3>
+        <div class="filter-group">
+          <h4>Raridade</h4>
+          <div class="rarity-filter">
+            <label><input type="checkbox" name="rarity" value="1" checked> Comum</label>
+            <label><input type="checkbox" name="rarity" value="2" checked> Incomum</label>
+            <label><input type="checkbox" name="rarity" value="3" checked> Raro</label>
+            <label><input type="checkbox" name="rarity" value="4" checked> Épico</label>
+            <label><input type="checkbox" name="rarity" value="5" checked> Lendário</label>
+            <label><input type="checkbox" name="rarity" value="6" checked> Artefato</label>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <h4>Preço</h4>
+          <div class="price-range">
+            <input type="range" min="0" max="1000" value="1000" class="slider" id="priceRange" />
+            <p>Até: <span id="priceValue">1000</span> pontos</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- LOJA -->
+    <section class="shop-main">
+      <div class="shop-toolbar">
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="Buscar itens..." />
+          <button><i class="fas fa-search"></i></button>
+        </div>
+        <div class="sort-options">
+          <select id="sortSelect">
+            <option value="default">Ordenar por: Padrão</option>
+            <option value="price-asc">Preço: Menor para Maior</option>
+            <option value="price-desc">Preço: Maior para Menor</option>
+            <option value="name-asc">Nome: A-Z</option>
+            <option value="name-desc">Nome: Z-A</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="shop-grid">
+        <!-- Itens serão renderizados aqui via JavaScript -->
+      </div>
+      
+      <div class="pagination-container"></div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="main-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>Sobre Mallta WoW</h4>
+          <p>O melhor servidor privado de World of Warcraft, oferecendo uma experiência autêntica com conteúdo exclusivo.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Links Rápidos</h4>
+          <ul>
+            <li><a href="#">Termos de Serviço</a></li>
+            <li><a href="#">Política de Privacidade</a></li>
+            <li><a href="#">Suporte</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Redes Sociais</h4>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-discord"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Mallta WoW. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
+  <script>
+    // Mapeamento de tipos de itens
+    const ITEM_TYPES = {
+      // Classes de itens (class)
+      2: 'weapon',   // Armas
+      4: 'armor',    // Armaduras
+      15: 'misc',    // Diversos
+      
+      // Subclasses de armaduras (class=4)
+      1: 'armor',    // Armaduras de pano
+      2: 'armor',    // Armaduras de couro
+      3: 'armor',    // Armaduras de malha
+      4: 'armor',    // Armaduras de placa
+      
+      // InventoryTypes específicos
+      23: 'mount',   // Montarias
+      24: 'pet',     // Mascotes
+    };
+
+    // Mapeamento de raridades
+    const RARITY_NAMES = {
+      1: 'Comum',
+      2: 'Incomum',
+      3: 'Raro',
+      4: 'Épico',
+      5: 'Lendário',
+      6: 'Artefato'
+    };
+    console.log(RARITY_NAMES[4])
+
+    let paginaAtual = 1;
+    const itensPorPagina = 12;
+    let todosOsItens = [];
+    let itensFiltrados = [];
+    let categoriaAtual = 'all';
+
+    $(document).ready(function () {
+      // Carrossel
+      $('.shop-banner-carousel').slick({
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 5000,
+        arrows: true
+      });
+
+      // Eventos de filtro
+      $('#priceRange').on('input', function() {
+        $('#priceValue').text($(this).val());
+        filtrarItens();
+      });
+
+      $('.rarity-filter input[type="checkbox"]').on('change', filtrarItens);
+
+      $('#searchInput').on('input', debounce(filtrarItens, 300));
+
+      $('#sortSelect').on('change', filtrarItens);
+
+      // Eventos de categoria
+      $('#categoryList li').on('click', function(e) {
+        e.preventDefault();
+        $('#categoryList li').removeClass('active');
+        $(this).addClass('active');
+        categoriaAtual = $(this).data('category');
+        filtrarItens();
+      });
+
+      carregarItensLoja();
+    });
+
+    function debounce(fn, delay) {
+      let timer;
+      return function() {
+        clearTimeout(timer);
+        timer = setTimeout(() => fn.apply(this, arguments), delay);
+      };
+    }
+
+    async function carregarItensLoja() {
+      const shopGrid = document.querySelector('.shop-grid');
+      const token = localStorage.getItem('authToken');
+
+      if (!token) {
+        shopGrid.innerHTML = '<p>Você precisa estar logado para ver os itens da loja.</p>';
+        return;
+      }
+
+      try {
+        const response = await fetch('https://api-backend-server.onrender.com/api/shop/shop-items', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (response.status === 401) {
+          shopGrid.innerHTML = '<p>Token inválido ou sessão expirada. Faça login novamente.</p>';
+          return;
+        }
+
+        const data = await response.json();
+        todosOsItens = Array.isArray(data) ? data : data.items;
+        
+        // Adicionar tipo de item baseado nos dados da API
+        todosOsItens = todosOsItens.map(item => {
+          return {
+            ...item,
+            itemType: determinarTipoItem(item),
+            rarityName: RARITY_NAMES[item.Quality] || 'xibiu'
+          };
+        });
+        
+        filtrarItens();
+      } catch (error) {
+        console.error('Erro ao carregar itens da loja:', error);
+        shopGrid.innerHTML = '<p>Erro ao carregar os itens da loja. Tente novamente mais tarde.</p>';
+      }
+    }
+
+function determinarTipoItem(item) {
+  const inv = item.inventory_type;
+  const cls = item.class;
+  const subcls = item.subclass;
+
+  // Tudo que for 'service' por enquanto deve ir para 'mount'
+  // Exemplo: cls === 15 && subcls === 5 era classificado como 'service'
+  if (cls === 15 && subcls === 5) return 'mount';
+  if(cls === 15 && subcls === 2) return 'pet'
+
+  // Montarias e Mascotes
+  if (item.name?.toLowerCase().includes('montaria') || inv === 23) return 'mount';
+//   if (item.name?.toLowerCase().includes('mascote') || inv === 24) return 'pet';
+
+  // Armas e Armaduras
+  if (cls === 2) return 'weapon';
+  if (cls === 4) return 'armor';
+
+  return 'misc';
+}
+
+    function filtrarItens() {
+      paginaAtual = 1;
+      
+      const precoMaximo = parseInt($('#priceRange').val()) || 1000;
+      const termoBusca = $('#searchInput').val().toLowerCase();
+      
+      // Obter raridades selecionadas
+      const raridadesSelecionadas = [];
+      $('.rarity-filter input:checked').each(function() {
+        raridadesSelecionadas.push(parseInt($(this).val()));
+      });
+
+      // Filtrar itens
+      itensFiltrados = todosOsItens.filter(item => {
+        const preco = item.price || 0;
+        const raridade = item.quality || 1;
+        const nome = (item.name || '').toLowerCase();
+        const tipoItem = item.itemType || 'misc';
+
+        // Verificar categoria
+        const categoriaMatch = categoriaAtual === 'all' || tipoItem === categoriaAtual;
+        
+        // Verificar raridade
+        const raridadeMatch = raridadesSelecionadas.length === 0 || 
+                             raridadesSelecionadas.includes(raridade);
+        
+        // Verificar preço
+        const precoMatch = preco <= precoMaximo;
+        
+        // Verificar termo de busca
+        const buscaMatch = termoBusca === '' || nome.includes(termoBusca);
+
+        return categoriaMatch && raridadeMatch && precoMatch && buscaMatch;
+      });
+
+      // Ordenar itens
+      const sortOption = $('#sortSelect').val();
+      switch(sortOption) {
+        case 'price-asc':
+          itensFiltrados.sort((a, b) => (a.price || 0) - (b.price || 0));
+          break;
+        case 'price-desc':
+          itensFiltrados.sort((a, b) => (b.price || 0) - (a.price || 0));
+          break;
+        case 'name-asc':
+          itensFiltrados.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+          break;
+        case 'name-desc':
+          itensFiltrados.sort((a, b) => (b.name || '').localeCompare(a.name || ''));
+          break;
+        default:
+          // Mantém a ordem padrão
+          break;
+      }
+
+      renderizarItensPaginados();
+    }
+
+   function renderizarItensPaginados() {
+  const shopGrid = document.querySelector('.shop-grid');
+  shopGrid.innerHTML = '';
+
+  const inicio = (paginaAtual - 1) * itensPorPagina;
+  const fim = inicio + itensPorPagina;
+  const itensPagina = itensFiltrados.slice(inicio, fim);
+
+  if (itensPagina.length === 0) {
+    shopGrid.innerHTML = '<p class="no-items">Nenhum item encontrado com os filtros selecionados.</p>';
+    document.querySelector('.pagination-container').innerHTML = '';
+    return;
+  }
+
+  const tabela = document.createElement('table');
+  tabela.className = 'shop-table';
+  tabela.innerHTML = `
+    <thead>
+      <tr>
+        <th>Imagem</th>
+        <th>Nome</th>
+        <th>Tipo</th>
+        <th>Raridade</th>
+        <th>Vote Points</th>
+        <th>Mallta Coin</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  `;
+
+  const tbody = tabela.querySelector('tbody');
+  itensPagina.forEach(item => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>
+        <a href="https://wotlk.cavernoftime.com/item=${item.item_entry}" target="_blank">
+          <img src="https://wow.zamimg.com/images/wow/icons/large/${item.icon || 'inv_misc_questionmark'}.jpg" 
+               alt="${item.name}" width="40" height="40" 
+               onerror="this.src='../images/frostmourne.jpg'" />
+        </a>
+      </td>
+      <td><span class="item-link">${item.name || 'Item sem nome'}</span></td>
+      <td>${getTipoNome(item)}</td>
+      <td class="rarity-${item.quality}">${RARITY_NAMES[item.quality] || 'Desconhecido'}</td>
+      <td>${item.vote_price || 0} pontos</td>
+      <td>${item.token_price || 0} pontos</td>
+      <td><button class="add-to-cart-btn" data-item-id="${item.item_entry}">Adicionar ao Carrinho</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  shopGrid.appendChild(tabela);
+  renderizarPaginacao();
+  
+  // Adicionar eventos aos botões do carrinho
+  document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      const itemId = this.getAttribute('data-item-id');
+      adicionarAoCarrinho(itemId);
+    });
+  });
+}
+
+    function getTipoNome(item) {
+      // Determina o nome do tipo baseado em class, subclass e InventoryType
+      if (item.InventoryType === 23) return 'Montaria';
+      if (item.InventoryType === 24) return 'Mascote';
+      
+      if (item.class === 2) {
+        // Armas
+        const weaponTypes = {
+          0: 'Arma Diversa',
+          1: 'Machado',
+          2: 'Arco',
+          3: 'Arma de Fogo',
+          4: 'Arma Branca',
+          5: 'Arma de Arremesso',
+          6: 'Arma de haste',
+          7: 'Espada',
+          8: 'Arma exótica',
+          9: 'Arma exótica',
+          10: 'Bastão',
+          11: 'Arma diversa',
+          12: 'Arma diversa',
+          13: 'Arma de punho',
+          14: 'Arma diversa',
+          15: 'Adaga',
+          16: 'Arma de arremesso',
+          17: 'Lança',
+          18: 'Arma de haste',
+          19: 'Maça',
+          20: 'Martelo'
+        };
+        return weaponTypes[item.subclass] || 'Arma';
+      }
+      
+      if (item.class === 4) {
+        // Armaduras
+        const armorTypes = {
+          0: 'Miscelânea',
+          1: 'Tecido',
+          2: 'Couro',
+          3: 'Malha',
+          4: 'Placa',
+          5: 'Couro (exótico)',
+          6: 'Escudo',
+          7: 'Libram',
+          8: 'Símbolo',
+          9: 'Totem',
+          10: 'Sinal'
+        };
+        return armorTypes[item.subclass] || 'Armadura';
+      }
+      
+      return 'Diversos';
+    }
+
+    function renderizarPaginacao() {
+      const totalPaginas = Math.ceil(itensFiltrados.length / itensPorPagina);
+      const paginacaoContainer = document.querySelector('.pagination-container');
+      
+      paginacaoContainer.innerHTML = '';
+
+      if (totalPaginas <= 1) return;
+
+      const btnAnterior = document.createElement('button');
+      btnAnterior.textContent = 'Anterior';
+      btnAnterior.disabled = paginaAtual === 1;
+      btnAnterior.addEventListener('click', () => {
+        if (paginaAtual > 1) {
+          paginaAtual--;
+          renderizarItensPaginados();
+        }
+      });
+
+      const infoPagina = document.createElement('span');
+      infoPagina.className = 'page-info';
+      infoPagina.textContent = `Página ${paginaAtual} de ${totalPaginas}`;
+
+      const btnProximo = document.createElement('button');
+      btnProximo.textContent = 'Próxima';
+      btnProximo.disabled = paginaAtual === totalPaginas;
+      btnProximo.addEventListener('click', () => {
+        if (paginaAtual < totalPaginas) {
+          paginaAtual++;
+          renderizarItensPaginados();
+        }
+      });
+
+      paginacaoContainer.appendChild(btnAnterior);
+      paginacaoContainer.appendChild(infoPagina);
+      paginacaoContainer.appendChild(btnProximo);
+    }
+
+    function adicionarAoCarrinho(itemId) {
+      console.log(`Item ${itemId} adicionado ao carrinho`);
+      const countElement = document.getElementById('cart-count');
+      let count = parseInt(countElement.textContent) || 0;
+      countElement.textContent = count + 1;
+      
+      const feedback = document.createElement('div');
+      feedback.className = 'cart-feedback';
+      feedback.textContent = 'Item adicionado ao carrinho!';
+      document.body.appendChild(feedback);
+      
+      setTimeout(() => {
+        feedback.remove();
+      }, 2000);
+    }
+    
+  </script>
+
+  <style>
+    .shop-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    
+    .shop-table th, .shop-table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #444;
+    }
+    
+    .shop-table th {
+      background-color: #2a2a2a;
+      color: #f0c14b;
+    }
+    
+    .shop-table tr:hover {
+      background-color: #73a8e4;
+    }
+    
+    .add-to-cart-btn {
+      background-color: #f0c14b;
+      color: #111;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .add-to-cart-btn:hover {
+      background-color: #ddb347;
+    }
+    
+    .pagination-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      gap: 15px;
+    }
+    
+    .pagination-container button {
+      background-color: #444;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    
+    .pagination-container button:disabled {
+      background-color: #222;
+      cursor: not-allowed;
+    }
+    
+    .page-info {
+      color: #ddd;
+    }
+    
+    .no-items {
+      text-align: center;
+      padding: 40px;
+      color: #aaa;
+      font-size: 18px;
+    }
+    
+    .cart-feedback {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px;
+      border-radius: 5px;
+      z-index: 1000;
+      animation: fadeInOut 2s ease-in-out;
+    }
+    
+    /* Cores para raridades */
+    .rarity-1 { color: #9d9d9d; } /* Comum */
+    .rarity-2 { color: #1eff00; }  /* Incomum */
+    .rarity-3 { color: #0070dd; }   /* Raro */
+    .rarity-4 { color: #a335ee; }   /* Épico */
+    .rarity-5 { color: #ff8000; }   /* Lendário */
+    .rarity-6 { color: #e6cc80; }   /* Artefato */
+    
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateY(20px); }
+      10% { opacity: 1; transform: translateY(0); }
+      90% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(20px); }
+    }
+  </style>
+</body>
+</html>

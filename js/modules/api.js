@@ -1,6 +1,6 @@
 const isLocalhost = window.location.hostname === 'localhost';
 const API_BASE_URL = isLocalhost
-  ? 'http://localhost:3000'
+  ? 'https://api-backend-server.onrender.com'
   : 'https://api-backend-server.onrender.com'; 
 
 export async function apiRequest(endpoint, method = 'GET', body = null) {
