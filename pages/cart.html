@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="../css/pages/cart.css">
+  <title>Carrinho - WoW Mallta</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0c0c0c;
+      color: #f1f1f1;
+    }
+
+    header {
+      background-color: #111;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.5rem;
+      border-bottom: 2px solid #333;
+    }
+
+    .cart-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: #1a1a1a;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #000;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      background: #2a2a2a;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+    }
+
+    .cart-item img {
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+      border-radius: 4px;
+      margin-right: 1rem;
+    }
+
+    .cart-item-details {
+      flex: 1;
+    }
+
+    .cart-item h3 {
+      margin: 0 0 5px;
+      font-size: 1rem;
+    }
+
+    .remove-btn {
+      background: #b40000;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .remove-btn:hover {
+      background: #ff0000;
+    }
+
+    .quantity-btn {
+      background: #444;
+      border: none;
+      padding: 5px 10px;
+      margin: 0 5px;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .quantity-btn:hover {
+      background: #666;
+    }
+
+    .total {
+      text-align: right;
+      margin-top: 20px;
+      font-size: 1.2rem;
+    }
+
+    .finalize-btn {
+      background: #007e00;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 6px;
+      margin-top: 20px;
+      cursor: pointer;
+      float: right;
+    }
+
+    .finalize-btn:hover {
+      background: #00b300;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <header>🛒 Carrinho de Compras - WoW Mallta</header>
+
+  <div class="cart-container" id="cartItemsContainer">
+    <p id="cartEmptyMessage">Seu carrinho está vazio.</p>
+    <div id="cartItemsList"></div>
+
+    <div class="total">
+      <p>Subtotal: <span id="cartSubtotal">0</span> pontos</p>
+      <p>Descontos: <span id="cartDiscounts">0</span> pontos</p>
+      <p><strong>Total: <span id="cartTotal">0</span> pontos</strong></p>
+    </div>
+
+    <button class="finalize-btn" id="finalizePurchase">Finalizar Compra</button>
+  </div>
+
+  <script src="../js/cart.js"></script>
+</body>
+</html>

@@ -142,9 +142,9 @@ a:hover {
     width: 100%;
 }
 
-.main-nav .active a {
+/* .main-nav .active a {
     color: var(--secondary-color);
-}
+} */
 
 .btn-login {
     background-color: var(--primary-color);
@@ -598,3 +598,6 @@ a:hover {
 .toast-message.hide {
   opacity: 0;
 }
+
+
+

@@ -12,11 +12,48 @@
   <!-- CSS -->
   <link rel="stylesheet" href="../css/pages/_shop.css" />
   <link rel="stylesheet" href="../css/pages/_card_shop.css" />
+  <link rel="stylesheet" href="../css/pages/_responsive.css" />
+  <link rel="stylesheet" href="../css/pages/cart.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
 
   <!-- Tooltip WoW -->
   <script src="https://cdn.cavernoftime.com/api/tooltip.js" defer></script>
+
+  <style>
+    /* Estilos do Carrinho Modal - Adicione ao seu CSS */
+    .cart-modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+      animation: fadeIn 0.3s;
+    }
+
+    .cart-modal-content {
+      position: relative;
+      background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+      margin: 5% auto;
+      padding: 0;
+      width: 85%;
+      max-width: 800px;
+      border-radius: 10px;
+      box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
+      border: 1px solid #333;
+      overflow: hidden;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* [Restante dos estilos do modal...] */
+    /* Adicione todos os estilos CSS fornecidos anteriormente aqui */
+  </style>
 </head>
 <body>
   <!-- HEADER -->
@@ -34,10 +71,16 @@
           <li class="active"><a href="shop.html">Loja</a></li>
           <li><a href="dashboard.html">Meu Perfil</a></li>
           <li>
-            <a href="cart.html"><i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span></a>
+            <a href="javascript:void(0)" onclick="openCart()">
+              <i class="fas fa-shopping-cart"></i> 
+              <span id="cart-count">0</span>
+            </a>
           </li>
         </ul>
       </nav>
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
   </header>
 
@@ -47,21 +90,18 @@
       <div class="banner-content">
         <h2>Promoções Épicas</h2>
         <p>Descontos especiais em itens lendários esta semana</p>
-        <button class="banner-button">Ver Ofertas</button>
       </div>
     </div>
     <div class="banner-slide" style="background-image: url('../images/banner2.png');">
       <div class="banner-content">
         <h2>Novas Montarias</h2>
         <p>Adquira as montarias exclusivas da temporada</p>
-        <button class="banner-button">Explorar</button>
       </div>
     </div>
     <div class="banner-slide" style="background-image: url('../images/banner3.png');">
       <div class="banner-content">
         <h2>Pacotes Especiais</h2>
         <p>Combos com itens exclusivos para todas as classes</p>
-        <button class="banner-button">Comprar Agora</button>
       </div>
     </div>
   </div>
@@ -96,14 +136,14 @@
           </div>
         </div>
 
-        <div class="filter-group">
+        <!-- <div class="filter-group">
           <h4>Preço</h4>
           <div class="price-range">
             <input type="range" min="0" max="1000" value="1000" class="slider" id="priceRange" />
-            <p>Até: <span id="priceValue">1000</span> pontos</p>
+            <p>Até: <span id="priceValue">1000</span> </p>
           </div>
         </div>
-      </div>
+      </div> -->
     </aside>
 
     <!-- LOJA -->
@@ -163,476 +203,61 @@
     </div>
   </footer>
 
-  <!-- JS -->
+ <!-- Modal do Carrinho -->
+<div id="cartModal" class="cart-modal">
+  <div class="cart-modal-overlay"></div>
+  <div class="cart-modal-content">
+    <div class="cart-modal-header">
+      <h2><i class="fas fa-shopping-cart"></i> Seu Carrinho</h2>
+      <button class="close-cart">&times;</button>
+    </div>
+    <div class="cart-modal-body">
+      <div id="cartEmptyMessage" class="cart-empty-state">
+        <div class="empty-cart-icon">
+          <i class="fas fa-shopping-basket"></i>
+        </div>
+        <h3>Seu carrinho está vazio</h3>
+        <p>Parece que você ainda não adicionou itens ao carrinho</p>
+        <button class="btn-continue-shopping">Voltar às Compras</button>
+      </div>
+      
+      <div id="cartItemsContainer" class="cart-items-container">
+        <div class="cart-items-scroll">
+          <div id="cartItemsList" class="cart-items-list"></div>
+        </div>
+        
+        <div class="cart-summary">
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span id="cartSubtotal">0</span> pontos
+          </div>
+          <div class="summary-row">
+            <span>Descontos</span>
+            <span id="cartDiscounts">0</span> pontos
+          </div>
+          <div class="summary-row total">
+            <span>Total</span>
+            <span id="cartTotal">0</span> pontos
+          </div>
+          
+          <div class="cart-actions">
+            <button class="btn-continue-shopping">
+              <i class="fas fa-arrow-left"></i> Continuar Comprando
+            </button>
+            <button id="finalizePurchase" class="btn-finalize-purchase">
+              Finalizar Compra <i class="fas fa-credit-card"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Scripts -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-
-  <script>
-    // Mapeamento de tipos de itens
-    const ITEM_TYPES = {
-      // Classes de itens (class)
-      2: 'weapon',   // Armas
-      4: 'armor',    // Armaduras
-      15: 'misc',    // Diversos
-      
-      // Subclasses de armaduras (class=4)
-      1: 'armor',    // Armaduras de pano
-      2: 'armor',    // Armaduras de couro
-      3: 'armor',    // Armaduras de malha
-      4: 'armor',    // Armaduras de placa
-      
-      // InventoryTypes específicos
-      23: 'mount',   // Montarias
-      24: 'pet',     // Mascotes
-    };
-
-    // Mapeamento de raridades
-    const RARITY_NAMES = {
-      1: 'Comum',
-      2: 'Incomum',
-      3: 'Raro',
-      4: 'Épico',
-      5: 'Lendário',
-      6: 'Artefato'
-    };
-    console.log(RARITY_NAMES[4])
-
-    let paginaAtual = 1;
-    const itensPorPagina = 12;
-    let todosOsItens = [];
-    let itensFiltrados = [];
-    let categoriaAtual = 'all';
-
-    $(document).ready(function () {
-      // Carrossel
-      $('.shop-banner-carousel').slick({
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 5000,
-        arrows: true
-      });
-
-      // Eventos de filtro
-      $('#priceRange').on('input', function() {
-        $('#priceValue').text($(this).val());
-        filtrarItens();
-      });
-
-      $('.rarity-filter input[type="checkbox"]').on('change', filtrarItens);
-
-      $('#searchInput').on('input', debounce(filtrarItens, 300));
-
-      $('#sortSelect').on('change', filtrarItens);
-
-      // Eventos de categoria
-      $('#categoryList li').on('click', function(e) {
-        e.preventDefault();
-        $('#categoryList li').removeClass('active');
-        $(this).addClass('active');
-        categoriaAtual = $(this).data('category');
-        filtrarItens();
-      });
-
-      carregarItensLoja();
-    });
-
-    function debounce(fn, delay) {
-      let timer;
-      return function() {
-        clearTimeout(timer);
-        timer = setTimeout(() => fn.apply(this, arguments), delay);
-      };
-    }
-
-    async function carregarItensLoja() {
-      const shopGrid = document.querySelector('.shop-grid');
-      const token = localStorage.getItem('authToken');
-
-      if (!token) {
-        shopGrid.innerHTML = '<p>Você precisa estar logado para ver os itens da loja.</p>';
-        return;
-      }
-
-      try {
-        const response = await fetch('https://api-backend-server.onrender.com/api/shop/shop-items', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-
-        if (response.status === 401) {
-          shopGrid.innerHTML = '<p>Token inválido ou sessão expirada. Faça login novamente.</p>';
-          return;
-        }
-
-        const data = await response.json();
-        todosOsItens = Array.isArray(data) ? data : data.items;
-        
-        // Adicionar tipo de item baseado nos dados da API
-        todosOsItens = todosOsItens.map(item => {
-          return {
-            ...item,
-            itemType: determinarTipoItem(item),
-            rarityName: RARITY_NAMES[item.Quality] || 'xibiu'
-          };
-        });
-        
-        filtrarItens();
-      } catch (error) {
-        console.error('Erro ao carregar itens da loja:', error);
-        shopGrid.innerHTML = '<p>Erro ao carregar os itens da loja. Tente novamente mais tarde.</p>';
-      }
-    }
-
-function determinarTipoItem(item) {
-  const inv = item.inventory_type;
-  const cls = item.class;
-  const subcls = item.subclass;
-
-  // Tudo que for 'service' por enquanto deve ir para 'mount'
-  // Exemplo: cls === 15 && subcls === 5 era classificado como 'service'
-  if (cls === 15 && subcls === 5) return 'mount';
-  if(cls === 15 && subcls === 2) return 'pet'
-
-  // Montarias e Mascotes
-  if (item.name?.toLowerCase().includes('montaria') || inv === 23) return 'mount';
-//   if (item.name?.toLowerCase().includes('mascote') || inv === 24) return 'pet';
-
-  // Armas e Armaduras
-  if (cls === 2) return 'weapon';
-  if (cls === 4) return 'armor';
-
-  return 'misc';
-}
-
-    function filtrarItens() {
-      paginaAtual = 1;
-      
-      const precoMaximo = parseInt($('#priceRange').val()) || 1000;
-      const termoBusca = $('#searchInput').val().toLowerCase();
-      
-      // Obter raridades selecionadas
-      const raridadesSelecionadas = [];
-      $('.rarity-filter input:checked').each(function() {
-        raridadesSelecionadas.push(parseInt($(this).val()));
-      });
-
-      // Filtrar itens
-      itensFiltrados = todosOsItens.filter(item => {
-        const preco = item.price || 0;
-        const raridade = item.quality || 1;
-        const nome = (item.name || '').toLowerCase();
-        const tipoItem = item.itemType || 'misc';
-
-        // Verificar categoria
-        const categoriaMatch = categoriaAtual === 'all' || tipoItem === categoriaAtual;
-        
-        // Verificar raridade
-        const raridadeMatch = raridadesSelecionadas.length === 0 || 
-                             raridadesSelecionadas.includes(raridade);
-        
-        // Verificar preço
-        const precoMatch = preco <= precoMaximo;
-        
-        // Verificar termo de busca
-        const buscaMatch = termoBusca === '' || nome.includes(termoBusca);
-
-        return categoriaMatch && raridadeMatch && precoMatch && buscaMatch;
-      });
-
-      // Ordenar itens
-      const sortOption = $('#sortSelect').val();
-      switch(sortOption) {
-        case 'price-asc':
-          itensFiltrados.sort((a, b) => (a.price || 0) - (b.price || 0));
-          break;
-        case 'price-desc':
-          itensFiltrados.sort((a, b) => (b.price || 0) - (a.price || 0));
-          break;
-        case 'name-asc':
-          itensFiltrados.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-          break;
-        case 'name-desc':
-          itensFiltrados.sort((a, b) => (b.name || '').localeCompare(a.name || ''));
-          break;
-        default:
-          // Mantém a ordem padrão
-          break;
-      }
-
-      renderizarItensPaginados();
-    }
-
-   function renderizarItensPaginados() {
-  const shopGrid = document.querySelector('.shop-grid');
-  shopGrid.innerHTML = '';
-
-  const inicio = (paginaAtual - 1) * itensPorPagina;
-  const fim = inicio + itensPorPagina;
-  const itensPagina = itensFiltrados.slice(inicio, fim);
-
-  if (itensPagina.length === 0) {
-    shopGrid.innerHTML = '<p class="no-items">Nenhum item encontrado com os filtros selecionados.</p>';
-    document.querySelector('.pagination-container').innerHTML = '';
-    return;
-  }
-
-  const tabela = document.createElement('table');
-  tabela.className = 'shop-table';
-  tabela.innerHTML = `
-    <thead>
-      <tr>
-        <th>Imagem</th>
-        <th>Nome</th>
-        <th>Tipo</th>
-        <th>Raridade</th>
-        <th>Vote Points</th>
-        <th>Mallta Coin</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  `;
-
-  const tbody = tabela.querySelector('tbody');
-  itensPagina.forEach(item => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>
-        <a href="https://wotlk.cavernoftime.com/item=${item.item_entry}" target="_blank">
-          <img src="https://wow.zamimg.com/images/wow/icons/large/${item.icon || 'inv_misc_questionmark'}.jpg" 
-               alt="${item.name}" width="40" height="40" 
-               onerror="this.src='../images/frostmourne.jpg'" />
-        </a>
-      </td>
-      <td><span class="item-link">${item.name || 'Item sem nome'}</span></td>
-      <td>${getTipoNome(item)}</td>
-      <td class="rarity-${item.quality}">${RARITY_NAMES[item.quality] || 'Desconhecido'}</td>
-      <td>${item.vote_price || 0} pontos</td>
-      <td>${item.token_price || 0} pontos</td>
-      <td><button class="add-to-cart-btn" data-item-id="${item.item_entry}">Adicionar ao Carrinho</button></td>
-    `;
-    tbody.appendChild(tr);
-  });
-
-  shopGrid.appendChild(tabela);
-  renderizarPaginacao();
-  
-  // Adicionar eventos aos botões do carrinho
-  document.querySelectorAll('.add-to-cart-btn').forEach(button => {
-    button.addEventListener('click', function() {
-      const itemId = this.getAttribute('data-item-id');
-      adicionarAoCarrinho(itemId);
-    });
-  });
-}
-
-    function getTipoNome(item) {
-      // Determina o nome do tipo baseado em class, subclass e InventoryType
-      if (item.InventoryType === 23) return 'Montaria';
-      if (item.InventoryType === 24) return 'Mascote';
-      
-      if (item.class === 2) {
-        // Armas
-        const weaponTypes = {
-          0: 'Arma Diversa',
-          1: 'Machado',
-          2: 'Arco',
-          3: 'Arma de Fogo',
-          4: 'Arma Branca',
-          5: 'Arma de Arremesso',
-          6: 'Arma de haste',
-          7: 'Espada',
-          8: 'Arma exótica',
-          9: 'Arma exótica',
-          10: 'Bastão',
-          11: 'Arma diversa',
-          12: 'Arma diversa',
-          13: 'Arma de punho',
-          14: 'Arma diversa',
-          15: 'Adaga',
-          16: 'Arma de arremesso',
-          17: 'Lança',
-          18: 'Arma de haste',
-          19: 'Maça',
-          20: 'Martelo'
-        };
-        return weaponTypes[item.subclass] || 'Arma';
-      }
-      
-      if (item.class === 4) {
-        // Armaduras
-        const armorTypes = {
-          0: 'Miscelânea',
-          1: 'Tecido',
-          2: 'Couro',
-          3: 'Malha',
-          4: 'Placa',
-          5: 'Couro (exótico)',
-          6: 'Escudo',
-          7: 'Libram',
-          8: 'Símbolo',
-          9: 'Totem',
-          10: 'Sinal'
-        };
-        return armorTypes[item.subclass] || 'Armadura';
-      }
-      
-      return 'Diversos';
-    }
-
-    function renderizarPaginacao() {
-      const totalPaginas = Math.ceil(itensFiltrados.length / itensPorPagina);
-      const paginacaoContainer = document.querySelector('.pagination-container');
-      
-      paginacaoContainer.innerHTML = '';
-
-      if (totalPaginas <= 1) return;
-
-      const btnAnterior = document.createElement('button');
-      btnAnterior.textContent = 'Anterior';
-      btnAnterior.disabled = paginaAtual === 1;
-      btnAnterior.addEventListener('click', () => {
-        if (paginaAtual > 1) {
-          paginaAtual--;
-          renderizarItensPaginados();
-        }
-      });
-
-      const infoPagina = document.createElement('span');
-      infoPagina.className = 'page-info';
-      infoPagina.textContent = `Página ${paginaAtual} de ${totalPaginas}`;
-
-      const btnProximo = document.createElement('button');
-      btnProximo.textContent = 'Próxima';
-      btnProximo.disabled = paginaAtual === totalPaginas;
-      btnProximo.addEventListener('click', () => {
-        if (paginaAtual < totalPaginas) {
-          paginaAtual++;
-          renderizarItensPaginados();
-        }
-      });
-
-      paginacaoContainer.appendChild(btnAnterior);
-      paginacaoContainer.appendChild(infoPagina);
-      paginacaoContainer.appendChild(btnProximo);
-    }
-
-    function adicionarAoCarrinho(itemId) {
-      console.log(`Item ${itemId} adicionado ao carrinho`);
-      const countElement = document.getElementById('cart-count');
-      let count = parseInt(countElement.textContent) || 0;
-      countElement.textContent = count + 1;
-      
-      const feedback = document.createElement('div');
-      feedback.className = 'cart-feedback';
-      feedback.textContent = 'Item adicionado ao carrinho!';
-      document.body.appendChild(feedback);
-      
-      setTimeout(() => {
-        feedback.remove();
-      }, 2000);
-    }
-    
-  </script>
-
-  <style>
-    .shop-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-    
-    .shop-table th, .shop-table td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #444;
-    }
-    
-    .shop-table th {
-      background-color: #2a2a2a;
-      color: #f0c14b;
-    }
-    
-    .shop-table tr:hover {
-      background-color: #73a8e4;
-    }
-    
-    .add-to-cart-btn {
-      background-color: #f0c14b;
-      color: #111;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 3px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    
-    .add-to-cart-btn:hover {
-      background-color: #ddb347;
-    }
-    
-    .pagination-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 20px;
-      gap: 15px;
-    }
-    
-    .pagination-container button {
-      background-color: #444;
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 3px;
-      cursor: pointer;
-    }
-    
-    .pagination-container button:disabled {
-      background-color: #222;
-      cursor: not-allowed;
-    }
-    
-    .page-info {
-      color: #ddd;
-    }
-    
-    .no-items {
-      text-align: center;
-      padding: 40px;
-      color: #aaa;
-      font-size: 18px;
-    }
-    
-    .cart-feedback {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #4CAF50;
-      color: white;
-      padding: 15px;
-      border-radius: 5px;
-      z-index: 1000;
-      animation: fadeInOut 2s ease-in-out;
-    }
-    
-    /* Cores para raridades */
-    .rarity-1 { color: #9d9d9d; } /* Comum */
-    .rarity-2 { color: #1eff00; }  /* Incomum */
-    .rarity-3 { color: #0070dd; }   /* Raro */
-    .rarity-4 { color: #a335ee; }   /* Épico */
-    .rarity-5 { color: #ff8000; }   /* Lendário */
-    .rarity-6 { color: #e6cc80; }   /* Artefato */
-    
-    @keyframes fadeInOut {
-      0% { opacity: 0; transform: translateY(20px); }
-      10% { opacity: 1; transform: translateY(0); }
-      90% { opacity: 1; transform: translateY(0); }
-      100% { opacity: 0; transform: translateY(20px); }
-    }
-  </style>
+  <script src="../js/shop.js"></script>
+  <script src="../js/cart.js"></script>
 </body>
 </html>

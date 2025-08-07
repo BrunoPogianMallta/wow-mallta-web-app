@@ -29,7 +29,7 @@ export function updateCharacterInfoUI(character) {
   const classLevel = document.getElementById('user-class-level');
   const timePlayed = document.getElementById('hours-played');
 
-  const className = classMap[character.class] || 'unknown';
+  const className = classMap[character.class] || '';
 
   avatar.onerror = () => {
     avatar.src = '../images/avatars/default.png';

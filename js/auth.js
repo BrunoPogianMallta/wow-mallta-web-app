@@ -149,6 +149,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await response.json();
 
         if (data.success) {
+
+          localStorage.clear();
           localStorage.setItem('authToken', data.token);
           if (formData.remember) {
             localStorage.setItem('rememberMe', 'true');

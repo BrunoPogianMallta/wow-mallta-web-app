@@ -1,52 +1,92 @@
-const isLocalhost = window.location.hostname === 'localhost';
-const API_BASE_URL = isLocalhost
-  ? 'https://api-backend-server.onrender.com'
-  : 'https://api-backend-server.onrender.com'; 
+const API_BASE_URL = 'https://api-backend-server.onrender.com';
+const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutos
+const CACHE_PREFIX = 'cache:';
+const pendingRequests = new Map();
 
-export async function apiRequest(endpoint, method = 'GET', body = null) {
+// Funções de cache (melhoradas mas com mesma interface)
+function getCacheKey(url) {
+  return `${CACHE_PREFIX}${url}`;
+}
+
+function getFromCache(url) {
+  const key = getCacheKey(url);
   try {
-    const url = `${API_BASE_URL}${endpoint}`;
-    const token = localStorage.getItem('authToken');
-
-    const options = {
-      method,
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      }
-    };
-
-    if (body) {
-      options.body = JSON.stringify(body);
-    }
-
-   
-    if (body) console.log(`[API] Body:`, body);
-
-    const response = await fetch(url, options);
-    const contentType = response.headers.get('Content-Type') || '';
-
+    const item = localStorage.getItem(key);
+    if (!item) return null;
     
-
-    if (!contentType.includes('application/json')) {
-      console.warn('[API] Resposta não é JSON:', await response.text());
-      throw new Error('Resposta do servidor não é JSON válida');
-    }
-
-    const data = await response.json();
-   
-    // Se for um objeto e indicar falha, lança erro
-    if (!response.ok || (typeof data === 'object' && data.success === false)) {
-      const errorMsg = data.message || 'Erro desconhecido';
-      console.warn(`[API] Erro de resposta: ${errorMsg}`);
-      throw new Error(errorMsg);
-    }
-
-    // Se tiver `data`, retorna ela. Se não, retorna o conteúdo bruto (útil para arrays)
-    return data.data ?? data;
-
-  } catch (err) {
-    console.warn(`Erro ao chamar ${endpoint}:`, err.message);
+    const { data, timestamp } = JSON.parse(item);
+    return Date.now() - timestamp > CACHE_TTL_MS ? null : data;
+  } catch (e) {
+    localStorage.removeItem(key);
     return null;
   }
+}
+
+function setCache(url, data) {
+  const key = getCacheKey(url);
+  try {
+    localStorage.setItem(key, JSON.stringify({ data, timestamp: Date.now() }));
+  } catch (err) {
+    // Limpa cache antigo se storage estiver cheio
+    Object.keys(localStorage)
+      .filter(k => k.startsWith(CACHE_PREFIX))
+      .slice(0, 5) // Limpa só os 5 mais antigos
+      .forEach(k => localStorage.removeItem(k));
+    localStorage.setItem(key, JSON.stringify({ data, timestamp: Date.now() }));
+  }
+}
+
+// SUA FUNÇÃO ORIGINAL MELHORADA (mas com mesma interface)
+export async function apiRequest(endpoint, method = 'GET', body = null) {
+  const url = `${API_BASE_URL}${endpoint}`;
+  const isGet = method.toUpperCase() === 'GET';
+  const token = localStorage.getItem('authToken');
+
+  // Cache para GET (otimizado)
+  if (isGet) {
+    const cached = getFromCache(url);
+    if (cached) return Promise.resolve(cached);
+    
+    if (pendingRequests.has(url)) {
+      return pendingRequests.get(url);
+    }
+  }
+
+  // Configuração da requisição (mais robusta)
+  const headers = {
+    'Content-Type': 'application/json',
+    ...(token && { 'Authorization': `Bearer ${token}` })
+  };
+
+  const options = {
+    method,
+    headers,
+    ...(body && { body: JSON.stringify(body) })
+  };
+
+  const requestPromise = fetch(url, options)
+    .then(async response => {
+      if (!response.ok) {
+        const error = new Error(response.statusText);
+        error.response = response;
+        throw error;
+      }
+      
+      const data = await response.json();
+      return data.data ?? data;
+    })
+    .then(data => {
+      if (isGet) setCache(url, data);
+      return data;
+    })
+    .catch(error => {
+      console.error(`[API] ${method} ${endpoint} falhou:`, error.message);
+      throw error; // Mantém o erro para ser tratado pelo chamador
+    })
+    .finally(() => {
+      if (isGet) pendingRequests.delete(url);
+    });
+
+  if (isGet) pendingRequests.set(url, requestPromise);
+  return requestPromise;
 }

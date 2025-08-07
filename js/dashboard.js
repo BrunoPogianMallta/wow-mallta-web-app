@@ -22,45 +22,28 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   await setupCharacterSelectionModal();
 
-  let userProfile = {};
-  let voteStatus = {};
-  let characters = [];
-
   const voteSitesContainerEl = document.querySelector('#vote-sites-container');
   const votePointsEl = document.getElementById('vote-points');
+  const nextVoteEl = document.getElementById('next-vote-time');
 
-  // Função fake para simular voto no mock
-  async function fakeHandleVote(siteId, voteStatusRef) {
-    alert(`Voto simulado no site ${siteId}`);
-    const site = voteStatusRef.sites.find(s => s.id === siteId);
-    if (site) {
-      site.canVote = false;
-      site.nextVote = Date.now() + 12 * 60 * 60 * 1000; // Próximo voto em 12h (simulado)
-    }
-    renderVoteSites(voteStatusRef, { voteSitesContainer: voteSitesContainerEl }, id => fakeHandleVote(id, voteStatusRef));
-    updateNextVoteTime(voteStatusRef);
-    updateVotePoints(voteStatusRef);
-  }
+  let userProfile = null;
+  let voteStatus = null;
+  let characters = null;
+  let mainCharacter = null;
 
-  // Atualiza o texto do próximo voto na UI
+  // Função para atualizar UI de votação - usa refs armazenadas para evitar buscar DOM toda hora
   function updateNextVoteTime(voteStatusData) {
-    if (!voteStatusData || !voteStatusData.sites) return;
+    if (!voteStatusData?.sites?.length) return;
 
     const now = Date.now();
     let minTime = Infinity;
 
-    voteStatusData.sites.forEach(site => {
+    for (const site of voteStatusData.sites) {
       if (!site.canVote && site.nextVote) {
-        const nextVoteTime = new Date(site.nextVote).getTime();
-        const diff = nextVoteTime - now;
-        if (diff > 0 && diff < minTime) {
-          minTime = diff;
-        }
+        const diff = new Date(site.nextVote).getTime() - now;
+        if (diff > 0 && diff < minTime) minTime = diff;
       }
-    });
-
-    const nextVoteEl = document.getElementById('next-vote-time');
-    if (!nextVoteEl) return;
+    }
 
     if (minTime === Infinity) {
       nextVoteEl.textContent = 'Agora disponível!';
@@ -71,76 +54,69 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // Atualiza o texto dos pontos de voto na UI
   function updateVotePoints(voteStatusData) {
-    if (!votePointsEl) return;
-    votePointsEl.textContent = voteStatusData.votePoints ?? '0';
+    votePointsEl.textContent = voteStatusData?.votePoints ?? '0';
   }
 
   async function loadVoteStatus() {
     if (useMockVoteData) {
       voteStatus = mockVoteStatus;
-      renderVoteSites(mockVoteStatus, { voteSitesContainer: voteSitesContainerEl }, id => fakeHandleVote(id, mockVoteStatus));
-      updateNextVoteTime(mockVoteStatus);
-      updateVotePoints(mockVoteStatus);
     } else {
       const votes = await apiRequest('/api/dashboard/vote-status');
-      if (votes) {
-        voteStatus = votes;
-        renderVoteSites(voteStatus, { voteSitesContainer: voteSitesContainerEl }, id => handleVote(id, { voteSitesContainer: voteSitesContainerEl }, voteStatus));
-        updateNextVoteTime(voteStatus);
-        updateVotePoints(voteStatus);
-      }
+      if (votes) voteStatus = votes;
+    }
+
+    if (voteStatus) {
+      renderVoteSites(voteStatus, { voteSitesContainer: voteSitesContainerEl }, id => handleVote(id, { voteSitesContainer: voteSitesContainerEl }, voteStatus));
+      updateNextVoteTime(voteStatus);
+      updateVotePoints(voteStatus);
     }
   }
 
-  async function loadAll() {
-    // Perfil
+  async function loadProfile() {
     const profile = await apiRequest('/api/dashboard/profile');
     if (profile) {
       userProfile = profile;
       updateUserProfileUI(userProfile, selectors);
     }
+  }
 
-    // Personagens
-    const chars = await apiRequest('/api/characters');
-    if (chars) {
-      characters = chars;
+  async function loadCharacters() {
+    characters = await apiRequest('/api/characters');
+    if (!characters?.length) return;
 
-      const savedCharacterId = localStorage.getItem('selectedCharacterId');
-      let mainCharacter = null;
+    // Tenta pegar personagem selecionado salvo no localStorage
+    const savedCharacterId = localStorage.getItem('selectedCharacterId');
+    mainCharacter = savedCharacterId ? characters.find(c => c.guid === parseInt(savedCharacterId)) : null;
 
-      if (savedCharacterId) {
-        mainCharacter = characters.find(c => c.guid === parseInt(savedCharacterId));
-      }
-
-      if (!mainCharacter) {
-        const mainCharFromApi = await apiRequest('/api/characters/main');
-        if (mainCharFromApi) {
-          mainCharacter = mainCharFromApi;
-          localStorage.setItem('selectedCharacterId', mainCharacter.guid);
-        }
-      }
-
-      if (mainCharacter) {
-        updateCharacterInfoUI(mainCharacter);
-      }
-
-      renderCharacters(characters, selectors, userProfile);
+    // Se não achou no localStorage, pega o principal do backend — evite chamada dupla!
+    if (!mainCharacter) {
+      mainCharacter = await apiRequest('/api/characters/main');
+      if (mainCharacter) localStorage.setItem('selectedCharacterId', mainCharacter.guid);
     }
 
-    // Votação
+    if (mainCharacter) {
+      updateCharacterInfoUI(mainCharacter);
+    }
+
+    renderCharacters(characters, selectors, userProfile);
+  }
+
+  async function loadAll() {
+    await loadProfile();
+    await loadCharacters();
     await loadVoteStatus();
   }
 
   await loadAll();
 
-  setInterval(loadVoteStatus, 60000); // Atualiza a cada minuto
+  // Atualiza só o voteStatus a cada minuto (cache de voto pode ser gerenciado no backend para evitar falsos positivos)
+  setInterval(loadVoteStatus, 60000);
 
-  // Modal Configurações da conta
+  // Config modal configurações da conta (manter, sem mudança)
   const settingsBtn = document.getElementById("open-account-settings");
   const accountSettingsModal = document.getElementById("account-settings-modal");
-  const closeModalButtons = accountSettingsModal.querySelectorAll(".close-modal");
+  const closeModalButtons = accountSettingsModal?.querySelectorAll(".close-modal") ?? [];
 
   if (settingsBtn && accountSettingsModal) {
     settingsBtn.addEventListener("click", (e) => {
@@ -149,11 +125,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  closeModalButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      accountSettingsModal.style.display = "none";
-    });
-  });
+  closeModalButtons.forEach(btn => btn.addEventListener("click", () => {
+    accountSettingsModal.style.display = "none";
+  }));
 
   window.addEventListener("click", (e) => {
     if (e.target === accountSettingsModal) {

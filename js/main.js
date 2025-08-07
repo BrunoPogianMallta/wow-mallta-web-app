@@ -138,5 +138,6 @@ document.addEventListener('DOMContentLoaded', function() {
 function logout() {
   localStorage.removeItem('authToken');
   localStorage.removeItem('rememberMe');
+  localStorage.clear();
   window.location.href = `${window.location.origin}/wow-mallta-web-app/pages/login.html`;
 }
