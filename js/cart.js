@@ -303,7 +303,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 3. Enviar cada item individualmente
     for (const item of cartItems) {
-      const response = await fetch('http://localhost:2000/api/mail/send', {
+      const response = await fetch('https://api-backend-server.onrender.com/api/mail/send', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
