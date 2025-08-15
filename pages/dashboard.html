@@ -242,27 +242,71 @@
     </div>
 
     <!-- Modal de Configurações da Conta -->
-    <div id="account-settings-modal" class="modal">
-    <div class="modal-content">
-        <span class="close-modal">&times;</span>
-        <h2>Editar Conta</h2>
-        <form id="account-settings-form" class="account-form">
-        <div class="form-group">
-            <label for="modal-email">Email</label>
-            <input type="email" id="modal-email" required>
-        </div>
-        <div class="form-group">
-            <label for="modal-current-password">Senha Atual</label>
-            <input type="password" id="modal-current-password" required>
-        </div>
-        <div class="form-group">
-            <label for="modal-new-password">Nova Senha</label>
-            <input type="password" id="modal-new-password">
-        </div>
-        <button type="submit" class="btn btn-primary">Salvar</button>
-        </form>
+   <!-- Modal de Configurações da Conta -->
+<div id="account-settings-modal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <h2>Configurações da Conta</h2>
+    
+    <div class="settings-tabs">
+      <button class="tab-btn active" data-tab="change-email">Alterar Email</button>
+      <button class="tab-btn" data-tab="change-password">Alterar Senha</button>
     </div>
-    </div>
+    
+    <div id="account-settings-message" class="form-message"></div>
+    
+    <!-- Formulário de Alteração de Email -->
+    <form id="change-email-form" class="account-form tab-content active" data-tab="change-email">
+      <div class="form-group">
+        <label for="current-password-email">Senha Atual*</label>
+        <input type="password" id="current-password-email" required>
+      </div>
+      <div class="form-group">
+        <label for="new-email">Novo Email</label>
+        <input type="email" id="new-email" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Salvar Email</button>
+    </form>
+    
+    <!-- Formulário de Alteração de Senha -->
+    <form id="change-password-form" class="account-form tab-content" data-tab="change-password">
+      <div class="form-group">
+        <label for="current-password">Senha Atual*</label>
+        <input type="password" id="current-password" required>
+      </div>
+      <div class="form-group">
+        <label for="new-password">Nova Senha</label>
+        <input type="password" id="new-password" required minlength="6">
+      </div>
+      <div class="form-group">
+        <label for="confirm-password">Confirmar Nova Senha</label>
+        <input type="password" id="confirm-password" required minlength="6">
+      </div>
+      <button type="submit" class="btn btn-primary">Salvar Senha</button>
+    </form>
+  </div>
+</div>
+    </form>
+    
+    <!-- Formulário de Alteração de Senha -->
+    <form id="change-password-form" class="account-form tab-content" data-tab="change-password">
+      <div class="form-group">
+        <label for="current-password">Senha Atual*</label>
+        <input type="password" id="current-password" required>
+      </div>
+      <div class="form-group">
+        <label for="new-password">Nova Senha</label>
+        <input type="password" id="new-password" required>
+      </div>
+      <div class="form-group">
+        <label for="confirm-password">Confirmar Nova Senha</label>
+        <input type="password" id="confirm-password" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Salvar Senha</button>
+    </form>
+  </div>
+</div>
+</div>
 
 
         <!-- Footer -->

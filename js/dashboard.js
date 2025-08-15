@@ -5,9 +5,118 @@ import { renderVoteSites, handleVote } from './modules/vote.js';
 import { renderCharacters } from './modules/characters.js';
 import { setupDashboardEvents } from './modules/events.js';
 import { setupCharacterSelectionModal } from './modules/characterSelector.js';
-import { mockVoteStatus } from './mocks/mockVoteData.js'; // Ajuste o caminho se necessário
+import { mockVoteStatus } from './mocks/mockVoteData.js';
 
-const useMockVoteData = false; // Mude para true para usar dados mockados
+//Configuração dos tabs no modal de configurações
+const tabButtons = document.querySelectorAll('.tab-btn');
+const tabContents = document.querySelectorAll('.tab-content');
+
+tabButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const tabId = button.getAttribute('data-tab');
+    
+    // Remove active class de todos os botões e conteúdos
+    tabButtons.forEach(btn => btn.classList.remove('active'));
+    tabContents.forEach(content => content.classList.remove('active'));
+    
+    // Adiciona active class ao botão clicado e ao conteúdo correspondente
+    button.classList.add('active');
+    document.querySelector(`.tab-content[data-tab="${tabId}"]`).classList.add('active');
+  });
+});
+
+// Configuração do formulário de alteração de email
+const changeEmailForm = document.getElementById('change-email-form');
+if (changeEmailForm) {
+  changeEmailForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const currentPassword = document.getElementById('current-password-email').value;
+    const newEmail = document.getElementById('new-email').value;
+    const messageEl = document.getElementById('account-settings-message');
+    
+    try {
+      const response = await apiRequest('/api/account/email', 'PUT', {
+        currentPassword,
+        email: newEmail
+      });
+
+      if (response && response.success) {
+        showMessage(messageEl, 'Email atualizado com sucesso!', 'success');
+        // Atualiza o email exibido no perfil
+        const emailDisplay = document.getElementById('email');
+        if (emailDisplay) emailDisplay.value = newEmail;
+      } else {
+        throw new Error(response?.message || 'Erro ao atualizar email');
+      }
+    } catch (error) {
+      showMessage(messageEl, error.message, 'error');
+      console.error('Erro ao atualizar email:', error);
+    }
+  });
+}
+
+// Configuração do formulário de alteração de senha
+const changePasswordForm = document.getElementById('change-password-form');
+if (changePasswordForm) {
+  changePasswordForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const currentPassword = document.getElementById('current-password').value;
+    const newPassword = document.getElementById('new-password').value;
+    const confirmPassword = document.getElementById('confirm-password').value;
+    const messageEl = document.getElementById('account-settings-message');
+    
+    // Validação básica
+    if (newPassword !== confirmPassword) {
+      showMessage(messageEl, 'As senhas não coincidem!', 'error');
+      return;
+    }
+    
+    if (newPassword.length < 6) {
+      showMessage(messageEl, 'A senha deve ter pelo menos 6 caracteres', 'error');
+      return;
+    }
+    
+    try {
+      const response = await apiRequest('/api/account/password', 'PUT', {
+        currentPassword,
+        newPassword
+      });
+
+      if (response && response.success) {
+        showMessage(messageEl, 'Senha atualizada com sucesso!', 'success');
+        // Limpa os campos do formulário
+        changePasswordForm.reset();
+      } else {
+        throw new Error(response?.message || 'Erro ao atualizar senha');
+      }
+    } catch (error) {
+      showMessage(messageEl, error.message, 'error');
+      console.error('Erro ao atualizar senha:', error);
+    }
+  });
+}
+
+// Função auxiliar para mostrar mensagens
+function showMessage(element, text, type) {
+  if (!element) return;
+  
+  element.textContent = text;
+  element.className = `form-message ${type}`;
+  element.style.display = 'block';
+  
+  // Esconde a mensagem após 5 segundos
+  setTimeout(() => {
+    element.style.display = 'none';
+  }, 5000);
+}
+
+
+
+
+const useMockVoteData = false;
+
 
 document.addEventListener('DOMContentLoaded', async () => {
   if (!localStorage.getItem('authToken')) {
@@ -31,7 +140,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   let characters = null;
   let mainCharacter = null;
 
-  // Função para atualizar UI de votação - usa refs armazenadas para evitar buscar DOM toda hora
   function updateNextVoteTime(voteStatusData) {
     if (!voteStatusData?.sites?.length) return;
 
@@ -85,14 +193,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     characters = await apiRequest('/api/characters');
     if (!characters?.length) return;
 
+    // Armazena os personagens no localStorage para uso no carrinho
+    localStorage.setItem('cachedCharacters', JSON.stringify(characters));
+
     // Tenta pegar personagem selecionado salvo no localStorage
     const savedCharacterId = localStorage.getItem('selectedCharacterId');
     mainCharacter = savedCharacterId ? characters.find(c => c.guid === parseInt(savedCharacterId)) : null;
 
-    // Se não achou no localStorage, pega o principal do backend — evite chamada dupla!
+    // Se não achou no localStorage, pega o principal do backend
     if (!mainCharacter) {
       mainCharacter = await apiRequest('/api/characters/main');
-      if (mainCharacter) localStorage.setItem('selectedCharacterId', mainCharacter.guid);
+      if (mainCharacter) {
+        localStorage.setItem('selectedCharacterId', mainCharacter.guid);
+      }
     }
 
     if (mainCharacter) {
@@ -110,10 +223,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   await loadAll();
 
-  // Atualiza só o voteStatus a cada minuto (cache de voto pode ser gerenciado no backend para evitar falsos positivos)
   setInterval(loadVoteStatus, 60000);
 
-  // Config modal configurações da conta (manter, sem mudança)
+  // Config modal configurações da conta
   const settingsBtn = document.getElementById("open-account-settings");
   const accountSettingsModal = document.getElementById("account-settings-modal");
   const closeModalButtons = accountSettingsModal?.querySelectorAll(".close-modal") ?? [];
@@ -135,3 +247,47 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 });
+
+const accountSettingsForm = document.getElementById("account-settings-form");
+
+if (accountSettingsForm) {
+  accountSettingsForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    
+    const currentPassword = document.getElementById("modal-current-password").value;
+    const newPassword = document.getElementById("modal-new-password").value;
+    const email = document.getElementById("modal-email").value;
+
+    try {
+      // Verificar se há uma nova senha para atualizar
+      if (newPassword) {
+        const response = await apiRequest('/api/account/password', 'PUT', {
+          currentPassword,
+          newPassword
+        });
+
+        if (!response) {
+          throw new Error('Erro ao atualizar senha');
+        }
+      }
+
+      // Atualizar email se necessário
+      if (email) {
+        const response = await apiRequest('/api/account/email', 'PUT', {
+          email
+        });
+
+        if (!response) {
+          throw new Error('Erro ao atualizar email');
+        }
+      }
+
+      // Feedback para o usuário
+      alert('Configurações atualizadas com sucesso!');
+      accountSettingsModal.style.display = "none";
+    } catch (error) {
+      console.error('Erro ao atualizar configurações:', error);
+      alert(error.message || 'Erro ao atualizar configurações');
+    }
+  });
+}
