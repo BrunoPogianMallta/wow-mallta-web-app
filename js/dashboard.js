@@ -46,12 +46,27 @@ if (changeEmailForm) {
         const newEmail = document.getElementById('new-email').value;
         const messageEl = document.getElementById('account-settings-message');
         
+        // Validação básica no cliente
+        if (!newEmail || !currentPassword) {
+            showMessage(messageEl, 'Por favor, preencha todos os campos', 'error');
+            return;
+        }
+        
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newEmail)) {
+            showMessage(messageEl, 'Por favor, insira um email válido', 'error');
+            return;
+        }
+
         try {
+            console.log('Enviando dados:', { currentPassword, email: newEmail }); // Debug
+            
             const response = await apiRequest('/api/account/email', 'PUT', {
                 currentPassword,
                 email: newEmail
             });
 
+            console.log('Resposta completa:', response); // Debug
+            
             if (response) {
                 if (response.success) {
                     showMessage(messageEl, 'Email atualizado com sucesso!', 'success');
@@ -64,8 +79,25 @@ if (changeEmailForm) {
                 throw new Error('Resposta inválida do servidor');
             }
         } catch (error) {
-            showMessage(messageEl, error.message, 'error');
-            console.error('Erro ao atualizar email:', error);
+            console.error('Detalhes do erro:', {
+                message: error.message,
+                response: error.response,
+                stack: error.stack
+            });
+            
+            let errorMessage = error.message;
+            
+            // Se for um erro 400, tentamos obter mais detalhes
+            if (error.response) {
+                try {
+                    const errorData = await error.response.json();
+                    errorMessage = errorData.message || errorData.error || errorMessage;
+                } catch (e) {
+                    // Não foi possível parsear a resposta de erro
+                }
+            }
+            
+            showMessage(messageEl, errorMessage, 'error');
         }
     });
 }
